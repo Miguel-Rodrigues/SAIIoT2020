@@ -42,7 +42,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Package
-        path: ./app/build/distributions
+        path: ${{ github.workspace }}/Project/Src/iscte.saiiot2020.accelkart/app/build/distributions
 
     # # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # # the publishing section of your build.gradle
