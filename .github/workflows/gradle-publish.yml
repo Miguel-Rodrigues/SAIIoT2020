@@ -26,6 +26,9 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+    - name: list current dir
+      run: ls
+
     - name: Build with Gradle
       run: ./gradlew build
 
