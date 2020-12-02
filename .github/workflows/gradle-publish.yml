@@ -12,9 +12,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./Projecto/Src/iscte.saiiot2020.accelkart/
+    defaults:
+      run:
+        working-directory: ./Projecto/Src/iscte.saiiot2020.accelkart/
 
     steps:
     - uses: actions/checkout@v2
