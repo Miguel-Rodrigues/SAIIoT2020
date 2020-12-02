@@ -12,9 +12,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Projecto/Src/iscte.saiiot2020.accelkart/
+    # defaults:
+    #   run:
+    #     working-directory: ./Projecto/Src/iscte.saiiot2020.accelkart/
 
     steps:
     - uses: actions/checkout@v2
@@ -26,10 +26,12 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    - name: Gradle Build
-      uses: eskatos/gradle-command-action@v1
-      with:
-        arguments: build
+    # - name: Gradle Build
+    #   uses: eskatos/gradle-command-action@v1
+    #   with:
+    #     arguments: build
+    - name: Test location
+      run: ls ./
 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
