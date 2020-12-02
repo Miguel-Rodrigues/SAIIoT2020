@@ -3,7 +3,7 @@
  */
 package iscte.saiiot2020.accelkart.utilities;
 
-import iscte.saiiot2020.accelkart.sensors.LinkedList;
+import iscte.saiiot2020.accelkart.list.LinkedList;
 
 class JoinUtils {
     public static String join(LinkedList source) {

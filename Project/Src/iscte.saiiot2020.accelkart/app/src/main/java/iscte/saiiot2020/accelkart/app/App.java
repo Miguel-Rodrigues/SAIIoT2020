@@ -3,7 +3,7 @@
  */
 package iscte.saiiot2020.accelkart.app;
 
-import iscte.saiiot2020.accelkart.sensors.LinkedList;
+import iscte.saiiot2020.accelkart.list.LinkedList;
 
 import static iscte.saiiot2020.accelkart.utilities.StringUtils.join;
 import static iscte.saiiot2020.accelkart.utilities.StringUtils.split;

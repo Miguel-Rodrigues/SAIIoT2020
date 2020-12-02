@@ -13,5 +13,7 @@
 			"path": "Project\\Src\\iscte.saiiot2020.accelkartcontroller"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
 }
