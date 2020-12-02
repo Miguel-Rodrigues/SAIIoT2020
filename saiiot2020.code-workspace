@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "Projecto\\Report"
+			"path": "Project\\Report"
 		},
 		{
-			"path": "Projecto\\Src\\iscte.saiiot2020.accelkart"
+			"path": "Project\\Src\\iscte.saiiot2020.accelkart"
 		}
 	],
 	"settings": {}
