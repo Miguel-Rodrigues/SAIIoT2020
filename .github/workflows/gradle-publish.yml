@@ -36,14 +36,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: View Project tree
+      run: tree ./
 
     - uses: actions/upload-artifact@v2
       with:
         name: Package
-        path: ./buildSrc/build/libs
+        path: build/libs
 
     # # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # # the publishing section of your build.gradle
