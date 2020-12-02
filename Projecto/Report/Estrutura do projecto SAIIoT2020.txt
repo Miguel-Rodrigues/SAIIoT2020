@@ -1,0 +1,32 @@
+Estrutura do projecto SAIIoT2020
+
+Documento
+=====================
+1. Introdução
+2. Objectivos
+3. Aplicações
+4. Contexto
+    Diagrama de Contexto
+5. Requisitos
+    5.1 Funcionais
+    5.2 Não Funcionais
+6. Diagrama de circuito
+7. Implementação
+8. Resultados
+    8.1 Fotografias
+9. Conclusões
+10. Bibliografia
+
+Apresentação
+=====================
+1. Introdução
+2. Objectivos
+3. Aplicações
+4. Diagrama de Contexto
+5. Requisitos
+6. Diagrama de circuito
+7. Resultados
+    7.1 Fotografias
+8. Conclusões
+9. Questões
+10. Bibliografia
