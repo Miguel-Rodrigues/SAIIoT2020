@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "Project\\Src\\iscte.saiiot2020.accelkart"
+		},
+		{
+			"path": "Project\\Src\\iscte.saiiot2020.accelkartcontroller"
 		}
 	],
 	"settings": {}
