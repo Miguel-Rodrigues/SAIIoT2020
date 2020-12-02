@@ -27,9 +27,7 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Gradle Build
-      uses: eskatos/gradle-command-action@v1
-      with:
-        arguments: build
+      run: gradle build
 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
