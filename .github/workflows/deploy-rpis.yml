@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Clean Workspace
-      uses: AutoModality/action-clean@v1.1.0
+    - run: rm ./*
 
     - name: Download 'iscte.saiiot2020.accelkart'
       uses: dawidd6/action-download-artifact@v2.10.0
@@ -31,7 +31,7 @@ jobs:
 
     steps:
     - name: Clean Workspace
-      uses: AutoModality/action-clean@v1.1.0
+    - run: rm ./*
 
     - name: Download 'iscte.saiiot2020.accelkart'
       uses: dawidd6/action-download-artifact@v2.10.0
