@@ -1,3 +1,6 @@
+# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java#publishing-using-gradle
+
 name: Deploy on Raspberry PIs
 
 on:
@@ -9,16 +12,26 @@ on:
 jobs:
   Deploy_on_Raspberry_PI_1:
     runs-on: ["self-hosted", "rpi1"]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - uses: ./.github/workflows/scripts/deploy_rpi
+    - name: Download 'iscte.saiiot2020.accelkart'
+      uses: dawidd6/action-download-artifact@v2.10.0
+      with:
+        workflow: gradle-publish.yml
+        name: 'iscte.saiiot2020.accelkart'
+
+    - name: Display structure of downloaded files
+      run: ls -R
 
   Deploy_on_Raspberry_PI_2:
     runs-on: ["self-hosted", "rpi2"]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - uses: ./.github/workflows/scripts/deploy_rpi
+    - name: Download 'iscte.saiiot2020.accelkart'
+      uses: dawidd6/action-download-artifact@v2.10.0
+      with:
+        workflow: gradle-publish.yml
+        name: 'iscte.saiiot2020.accelkart'
+
+    - name: Display structure of downloaded files
+      run: ls -R
