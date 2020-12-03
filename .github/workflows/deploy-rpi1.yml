@@ -1,0 +1,22 @@
+# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java#publishing-using-gradle
+
+name: Gradle Package
+
+on:
+  workflow_run:
+      workflows: ["Gradle Package"]
+      types:
+        - completed
+
+jobs:
+  build:
+    runs-on: ["self-hosted", "rpi1"]
+
+    steps:
+    - uses: actions/download-artifact@v2
+        with:
+          name: "iscte.saiiot2020.accelkart"
+
+    - name: Display structure of downloaded files
+        run: ls -R
