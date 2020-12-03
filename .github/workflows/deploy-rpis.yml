@@ -14,6 +14,9 @@ jobs:
     runs-on: ["self-hosted", "rpi1"]
 
     steps:
+    - name: Clean Workspace
+      uses: AutoModality/action-clean@v1.1.0
+
     - name: Download 'iscte.saiiot2020.accelkart'
       uses: dawidd6/action-download-artifact@v2.10.0
       with:
@@ -27,6 +30,9 @@ jobs:
     runs-on: ["self-hosted", "rpi2"]
 
     steps:
+    - name: Clean Workspace
+      uses: AutoModality/action-clean@v1.1.0
+
     - name: Download 'iscte.saiiot2020.accelkart'
       uses: dawidd6/action-download-artifact@v2.10.0
       with:
