@@ -14,10 +14,10 @@ jobs:
     runs-on: ["self-hosted", "rpi2"]
 
     steps:
-    - name: Download 'iscte.saiiot2020.accelkart'
+    - name: Download 'iscte-saiiot2020-accelkart'
       uses: actions/download-artifact@v2
       with:
-        name: 'iscte.saiiot2020.accelkart'
+        name: iscte-saiiot2020-accelkart
 
     - name: Display structure of downloaded files
       run: ls -R
