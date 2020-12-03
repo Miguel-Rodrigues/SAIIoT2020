@@ -43,5 +43,5 @@ jobs:
     - name: Publish artifact
       uses: actions/upload-artifact@v2
       with:
-        name: iscte-saiiot2020-accelkart
+        name: iscte.saiiot2020.accelkart
         path: ${{ github.workspace }}/Project/Src/iscte.saiiot2020.accelkart/app/build/distributions

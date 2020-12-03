@@ -14,8 +14,11 @@ jobs:
     runs-on: ["self-hosted", "rpi1"]
 
     steps:
-    - name: Download 'iscte-saiiot2020-accelkart'
-      uses: actions/download-artifact@v2
+    - name: Download 'iscte.saiiot2020.accelkart'
+      uses: dawidd6/action-download-artifact@v2.10.0
+      with:
+        workflow: gradle-publish.yml
+        name: 'iscte.saiiot2020.accelkart'
 
     - name: Display structure of downloaded files
       run: ls -R
