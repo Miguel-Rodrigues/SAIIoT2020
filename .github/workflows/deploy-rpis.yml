@@ -10,9 +10,15 @@ jobs:
   Deploy_on_Raspberry_PI_1:
     runs-on: ["self-hosted", "rpi1"]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
       - uses: ./.github/workflows/scripts/deploy_rpi
 
   Deploy_on_Raspberry_PI_2:
     runs-on: ["self-hosted", "rpi2"]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
       - uses: ./.github/workflows/scripts/deploy_rpi

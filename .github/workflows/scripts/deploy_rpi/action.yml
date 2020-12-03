@@ -8,6 +8,7 @@ runs:
       with:
         workflow: gradle-publish.yml
         name: 'iscte.saiiot2020.accelkart'
+        path: ./artifacts
 
     - name: Display structure of downloaded files
-      run: ls -R
+      run: ls -R ./artifacts
