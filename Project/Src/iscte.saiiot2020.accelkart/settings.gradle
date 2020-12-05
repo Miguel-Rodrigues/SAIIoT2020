@@ -8,4 +8,6 @@
  */
 
 rootProject.name = 'iscte.saiiot2020.accelkart'
-include('app', 'list', 'utilities')
+
+include 'utilities'
+include 'application'

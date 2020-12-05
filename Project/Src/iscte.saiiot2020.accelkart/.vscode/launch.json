@@ -14,7 +14,7 @@
             "type": "java",
             "name": "Debug (Launch)-App<app>",
             "request": "launch",
-            "mainClass": "iscte.saiiot2020.accelkart.app.App",
+            "mainClass": "iscte.saiiot2020.accelkart.app.Application",
             "projectName": "app"
         }
     ]
