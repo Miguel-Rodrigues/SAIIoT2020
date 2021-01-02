@@ -7,13 +7,10 @@
 			"path": "Project\\Report"
 		},
 		{
-			"path": "Project\\Src\\iscte.saiiot2020.accelkart"
+			"path": "Project\\Src\\AccelKartRemote"
 		},
 		{
-			"path": "Project\\Src\\iscte.saiiot2020.accelkartcontroller"
+			"path": "Project\\Src\\AccelKartServer"
 		}
-	],
-	"settings": {
-		"java.configuration.updateBuildConfiguration": "automatic"
-	}
+	]
 }

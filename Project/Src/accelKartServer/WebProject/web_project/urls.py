@@ -14,11 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from Project.Src.AccelKartServer.web_project.AccelkartServer import views
-
+from django.urls import path, include
+from django.views.generic import TemplateView
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
+    path('AccelKartServer', include('AccelKartServer.urls')),
     path('admin/', admin.site.urls),
-    path("", views.home, name="home"),
+
+    path('openapi/', get_schema_view(
+        title="School Service",
+        description="API developers hpoing to use our service"
+    ), name='openapi-schema'),
+
+     path('docs/', TemplateView.as_view(
+        template_name='documentation.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='swagger-ui'),
 ]
