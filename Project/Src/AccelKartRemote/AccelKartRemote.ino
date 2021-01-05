@@ -72,7 +72,6 @@ LSM9DS1 imu;
 #define SDA_1 8
 #define SCL_1 9
 
-TwoWire I2Cone = TwoWire(0);
 ////////////////////////////
 // Sketch Output Settings //
 ////////////////////////////
@@ -96,8 +95,10 @@ void printAttitude(float ax, float ay, float az, float mx, float my, float mz);
 void setup()
 {
   Serial.begin(115200);
-  I2Cone.begin(SDA_1, SCL_1, 100000);
-  if (imu.begin(LSM9DS1_AG_ADDR(1), LSM9DS1_M_ADDR(1), I2Cone) == false) // with no arguments, this uses default addresses (AG:0x6B, M:0x1E) and i2c port (Wire).
+  pinMode(SDA_1, INPUT_PULLUP);
+  pinMode(SCL_1, INPUT_PULLUP);
+  Wire.begin(SDA_1, SCL_1, 100000);
+  if (imu.begin() == false) // with no arguments, this uses default addresses (AG:0x6B, M:0x1E) and i2c port (Wire).
   {
     Serial.println("Failed to communicate with LSM9DS1.");
     Serial.println("Double-check wiring.");
