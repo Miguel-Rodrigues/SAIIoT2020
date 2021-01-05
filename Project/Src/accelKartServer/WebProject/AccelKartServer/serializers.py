@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Student
 
 
-class StudentSerializer(serializers.ModelSerializer):
+class RemoteIMUSensorISerializer(serializers.ModelSerializer):
     class Meta:
-        model = Student
-        fields = ('first_name', 'last_name', 'grade', 'age')
+        model = "Remote IMU Sensor"
+        fields = ("GyroX", "GyroY", "GyroZ", "AcellerometerX", "AcellerometerY", "AcellerometerZ", "CompassX", "CompassY", "CompassZ", "Button1", "Button2")

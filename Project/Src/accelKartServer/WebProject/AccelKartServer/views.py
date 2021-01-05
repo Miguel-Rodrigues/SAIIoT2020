@@ -1,16 +1,16 @@
 # AccelKartServer/views.py
 from rest_framework import generics
-from .models import Student
-from .serializers import StudentSerializer
+from .models import RemoteIMUSensor
+from .serializers import RemoteIMUSensorISerializer
 
 
 class KartAPI(generics.ListCreateAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    queryset = RemoteIMUSensor.objects.all()
+    serializer_class = RemoteIMUSensorISerializer
 
-class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+class KartAPIDetail(generics.CreateAPIView):
+    queryset = RemoteIMUSensor.objects.all()
+    serializer_class = RemoteIMUSensorISerializer
 
 # Request -> RPI
 # {
