@@ -2,17 +2,23 @@ Estrutura do projecto SAIIoT2020
 
 Documento
 =====================
-1. Introdução
-2. Objectivos
-3. Aplicações
-4. Contexto
-    Diagrama de Contexto
-5. Requisitos
-    5.1 Funcionais
-    5.2 Não Funcionais
-6. Diagrama de circuito
-7. Implementação
-8. Resultados
+1.Abstract
+    -Breve descrição
+    -Aplicações
+2. Introdução
+    - Objectivos
+    - Aplicações
+2. System Description
+    2.1 Diagrama de Contexto
+    2.2. Requisitos
+        2.2.1 Funcionais
+        2.2.2 Não Funcionais
+    2.4 Hardware
+        -Diagrama de circuito
+        -Componentes
+    2.5 Software
+        -Implementação
+8. Results and Discussion
     8.1 Fotografias
 9. Conclusões
 10. Bibliografia
