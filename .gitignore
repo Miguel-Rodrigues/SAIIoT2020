@@ -16,3 +16,4 @@ test/resources/projects/maven/salut/testGradle
 .vscode
 Project/Src/AccelKartServer/env
 __pycache__
+build

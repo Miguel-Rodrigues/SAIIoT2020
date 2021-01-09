@@ -67,10 +67,10 @@ LSM9DS1 imu;
 // Example I2C Setup //
 ///////////////////////
 // SDO_XM and SDO_G are both pulled high, so our addresses are:
-// #define LSM9DS1_M	0x1E // Would be 0x1C if SDO_M is LOW
-// #define LSM9DS1_AG	0x6B // Would be 0x6A if SDO_AG is LOW
-#define SDA_1 8
-#define SCL_1 9
+#define LSM9DS1_M  0x1E // Would be 0x1C if SDO_M is LOW
+#define LSM9DS1_AG 0x6B // Would be 0x6A if SDO_AG is LOW
+#define SDA_1 21 //8
+#define SCL_1 22 //9
 
 ////////////////////////////
 // Sketch Output Settings //
@@ -86,6 +86,9 @@ static unsigned long lastPrint = 0; // Keep track of print time
 // http://www.ngdc.noaa.gov/geomag-web/#declination
 #define DECLINATION -8.58 // Declination (degrees) in Boulder, CO.
 
+#define BUTTON_1 32
+#define BUTTON_2 33
+
 //Function definitions
 void printGyro();
 void printAccel();
@@ -97,7 +100,15 @@ void setup()
   Serial.begin(115200);
   pinMode(SDA_1, INPUT_PULLUP);
   pinMode(SCL_1, INPUT_PULLUP);
-  Wire.begin(SDA_1, SCL_1, 100000);
+
+  pinMode(BUTTON_1, INPUT);
+  pinMode(BUTTON_2, INPUT);
+  
+  if (Wire.begin(SDA_1, SCL_1) == false) {
+    Serial.println("Failed to start I2C Port.");
+    while (1);
+  }
+
   if (imu.begin() == false) // with no arguments, this uses default addresses (AG:0x6B, M:0x1E) and i2c port (Wire).
   {
     Serial.println("Failed to communicate with LSM9DS1.");
@@ -146,6 +157,7 @@ void loop()
     // substituted for each other.
     printAttitude(imu.ax, imu.ay, imu.az,
                   -imu.my, -imu.mx, imu.mz);
+    printButtons();
     Serial.println();
 
     lastPrint = millis(); // Update lastPrint time
@@ -256,4 +268,13 @@ void printAttitude(float ax, float ay, float az, float mx, float my, float mz)
   Serial.print(", ");
   Serial.println(roll, 2);
   Serial.print("Heading: "); Serial.println(heading, 2);
+}
+
+void printButtons() {
+    int button1State = digitalRead(BUTTON_1);
+    int button2State = digitalRead(BUTTON_2); 
+    Serial.print("Button 1: ");
+    Serial.print(button1State);
+    Serial.print(", Button 2: ");
+    Serial.println(button2State);
 }
