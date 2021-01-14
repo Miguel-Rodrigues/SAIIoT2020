@@ -1,31 +1,12 @@
 # AccelKartServer/views.py
 from rest_framework import generics
-from .models import RemoteIMUSensor
-from .serializers import RemoteIMUSensorISerializer
-
+from django.template.response import TemplateResponse
 
 class KartAPI(generics.ListCreateAPIView):
-    queryset = RemoteIMUSensor.objects.all()
-    serializer_class = RemoteIMUSensorISerializer
 
-class KartAPIDetail(generics.CreateAPIView):
-    queryset = RemoteIMUSensor.objects.all()
-    serializer_class = RemoteIMUSensorISerializer
+    def get(self, request):
+        response = TemplateResponse(request, 'KartAPIControls.html', {})
+        return response
 
-# Request -> RPI
-# {
-#     "XAccel" : -100,
-#     "YAccel" : -100,
-#     "ZAccel" : -100,
-#     "compassX" : -100,
-#     "compassY" : -100,
-#     "compassZ" : -100,
-#     "Button1" : true,
-#     "Button2" : false   
-# }
-
-# Response -> ESP32
-# {
-#     "Status" : "OK|ERROR",
-#     ""
-# }
+    def post(self, request):
+        return Response({Hello : "World"})

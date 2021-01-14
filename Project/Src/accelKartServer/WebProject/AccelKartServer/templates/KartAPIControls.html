@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Accelerometer Kart Server Controls</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Menu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/">Swagger UI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../openapi/">OpenAPI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../admin/">Django Admin Page</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <h1 class="mt-5">Accelerometer controlled kart.</h1>
+      <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>
+
+      <div id="joypad">
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">
+          ISCTE - Instituto Universitário de Lisboa
+          <span class=right>SAIIoT - 2020</span>
+        </span>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="{% static 'node_modules/jquery/dist/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'node_modules/nipplejs/dist/nipplejs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/index.js' %}"></script>
+  </body>
+</html>
