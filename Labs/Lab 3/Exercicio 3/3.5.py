@@ -6,7 +6,6 @@ sense = SenseHat()
 def is_in_margin(value, recommended, margin):
     return recommended - (margin / 2) <= value <= recommended + (margin / 2)
     
-
 while True:
     
     red = (255, 0, 0)
