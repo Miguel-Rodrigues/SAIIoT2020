@@ -3,14 +3,18 @@ from sense_emu import SenseHat
 
 sense = SenseHat()
 
+def is_in_margin(value, recommended, margin):
+    return recommended - (margin / 2) <= value <= recommended + (margin / 2)
+    
+
 while True:
     
     red = (255, 0, 0)
     green = (0, 255, 0)
     h_margin = 5
     recommended_h = 60
-    t_range = range(20, 25)
-    h_range = range(recommended_h - (h_margin \ 2))
+    t_margin = 5
+    recommended_t = 22.5
     
     t = sense.get_temperature()
     p = sense.get_pressure()
@@ -20,9 +24,12 @@ while True:
     p = round(p,1)
     h = round(h,1)
    
+    t_in_range = is_in_margin(t, recommended_t, t_margin)
+    h_in_range = is_in_margin(h, recommended_h, h_margin)
+   
     message = "Temperature: " + str(t) + "Pressure: " + str(p) + "Humidity: " + str(h)
    
-    if(t in t_range and h in h_range):
+    if(h_in_range and t_in_range):
         tela=green
     else:
         tela=red
