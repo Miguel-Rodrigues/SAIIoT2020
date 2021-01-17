@@ -17,6 +17,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: List files
+      run: ls ${{ github.workspace }}
+
     - name: Publish artifact
       uses: actions/upload-artifact@v2
       with:
