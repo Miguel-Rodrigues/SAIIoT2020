@@ -6,9 +6,13 @@ apt-get update -y
 apt-get upgrade -y
 apt-get autoremove
 apt-get install apache2-dev apache2-mpm-worker libapache2-mod-wsgi-py3 python3 git -y
+pip3 install virtualenv
+
+mkdir /var/www/accelkartServer
+chmod 775 /var/www/accelkartServer
+cd /var/www/accelkartServer
 
 # install python virtual environment
-pip3 install virtualenv
 virtualenv env
 source ./env/bin/activate
 pip install -r ./requirements.txt
