@@ -1,6 +1,7 @@
 #joypad {
-    display: block;
+    display: inline-block;
     width: 10em;
     height: 10em;
     position: relative;
+    vertical-align: middle;
 }
