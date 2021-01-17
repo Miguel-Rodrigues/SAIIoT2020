@@ -12,9 +12,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Project/Src/AccelKartServer
 
     steps:
     - name: Checkout
@@ -24,4 +21,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: AccelKartServer
-        path: .
+        path: ${{ github.workspace }}/Project/Src/AccelKartServer/
