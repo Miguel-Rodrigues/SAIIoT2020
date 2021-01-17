@@ -11,4 +11,4 @@ class KartAPI(generics.ListCreateAPIView):
 
     def post(self, request):
         
-        return JsonResponse({"Hello" : "World"})
+        return JsonResponse({"Status" : "OK"})

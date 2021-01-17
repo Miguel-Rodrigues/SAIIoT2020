@@ -28,7 +28,7 @@ SECRET_KEY = '2e5(*x8nq)u!)*5o+#_(35uqmpw60*ilavvmpf7dm6n61#2)fw'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1', socket.gethostbyname(socket.gethostname())
+    'localhost', '127.0.0.1', socket.gethostbyname(socket.gethostname()), "accelKartServer.local"
 ]
 
 # Application definition
