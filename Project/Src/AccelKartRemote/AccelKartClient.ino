@@ -5,12 +5,9 @@
 
 #include "AccelKartClient.h"
 
-char const * ssid = "Viniltejo";
-char const * ssidPassword = "arb6lvfc";
-String address = "http://192.168.1.77:8081/";
 const char* moveKartTemplate = "{\"name\":\"%s\",\"gyro\":{\"x\":%f,\"y\":%f,\"z\":%f},\"accel\":{\"x\":%f,\"y\":%f,\"z\":%f},\"compass\":{\"x\":%f,\"y\":%f,\"z\":%f},\"pitch\":%f,\"roll\":%f,\"heading\":%f,\"button1\":%s,\"button2\":%s}";
 
-void initializeWiFi()
+void initializeWiFi(char const * ssid, char const * password, char const * address)
 {
     Serial.println("Initializing WiFi card...");
 
@@ -27,7 +24,7 @@ void initializeWiFi()
 
 int moveKart(sensorData *data)
 {
-    String call = "MoveKart";
+    String call = "AccelKartServer";
     HTTPClient http;
     int httpResponseCode = 0;
 
@@ -40,7 +37,7 @@ int moveKart(sensorData *data)
 
         //Serializing data
         char payload[300];
-        sprintf(payload, moveKartTemplate, "ESP32_9DOF_Sensor",
+        sprintf(payload, moveKartTemplate, data->name,
             data->gyro.x, data->gyro.y, data->gyro.z,
             data->accel.x, data->accel.y, data->accel.z,
             data->compass.x, data->compass.y, data->compass.z,

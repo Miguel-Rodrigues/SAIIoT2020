@@ -6,6 +6,12 @@
 #include "Accelerometer.h"
 #include "AccelKartClient.h"
 
+#define deviceName "AccelKartRemote ESP32 9-DOF Smart Sensor"
+
+char const * ssid = "Viniltejo";
+char const * ssidPassword = "arb6lvfc";
+char const * address = "http://192.168.1.77:8000/";
+
 void setup()
 {
   Serial.begin(115200);
@@ -13,8 +19,8 @@ void setup()
 
   Serial.println("== Program Start ==");
 
-  initializeSensor();
-  initializeWiFi();
+  initializeSensor(deviceName);
+  initializeWiFi(ssid, ssidPassword, address);
 
   Serial.println("Load completed!");
 }
@@ -23,6 +29,7 @@ void loop()
 {
   sensorData *data = getSensorData();
 
+  // Reboots board if WiFi connection has lost.
   if (moveKart(data) == 0)
   {
     abort();

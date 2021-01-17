@@ -32,7 +32,10 @@
 			"unordered_map": "cpp",
 			"unordered_set": "cpp",
 			"string_view": "cpp",
-			"xmemory": "cpp"
+			"xmemory": "cpp",
+			"system_error": "cpp",
+			"xlocale": "cpp",
+			"typeinfo": "cpp"
 		}
 	}
 }

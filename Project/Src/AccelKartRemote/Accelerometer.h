@@ -9,6 +9,7 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <SparkFunLSM9DS1.h>
+#include <string.h>
 
 // Earth's magnetic field varies by location. Add or subtract
 // a declination to get a more accurate heading. Calculate
@@ -47,6 +48,7 @@ typedef struct point3d
 
 typedef struct sensorData
 {
+  char const * name;
   point3d gyro;
   point3d accel;
   point3d compass;
@@ -57,7 +59,8 @@ typedef struct sensorData
   bool button1;
   bool button2;
 
-  sensorData() {
+  sensorData(char const * name_) {
+    name = name_;
     pitch = 0;
     roll = 0;
     heading = 0;
@@ -71,7 +74,7 @@ void getMag(sensorData *sensorData);
 void getAttitude(sensorData *sensorData);
 void getButtons(sensorData *sensorData);
 
-void initializeSensor();
+void initializeSensor(char const * sensorName_);
 sensorData* getSensorData();
 
 #endif

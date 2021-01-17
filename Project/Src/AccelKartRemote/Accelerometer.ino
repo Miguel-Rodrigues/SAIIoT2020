@@ -116,12 +116,14 @@ void getButtons(sensorData *sensorData)
   Serial.println(sensorData->button2);
 }
 
-void initializeSensor() {
+char const * sensorName;
+void initializeSensor(char const * sensorName_) {
   pinMode(SDA_1, INPUT_PULLUP);
   pinMode(SCL_1, INPUT_PULLUP);
 
   pinMode(BUTTON_1, INPUT);
   pinMode(BUTTON_2, INPUT);
+  sensorName = sensorName_;
 
   Serial.println("Initializing I2C channel...");
   if (Wire.begin(SDA_1, SCL_1) == false)
@@ -144,7 +146,7 @@ void initializeSensor() {
 }
 
 sensorData* getSensorData() {
-  sensorData* data = new sensorData();
+  sensorData* data = new sensorData(sensorName);
   // Update the sensor values whenever new data is available
   if (imu.gyroAvailable())
   {

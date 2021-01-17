@@ -11,7 +11,7 @@
 #include <HTTPClient.h>
 #include "Accelerometer.h"
 
-void initializeWiFi();
+void initializeWiFi(char const * ssid, char const * password, char const * address);
 int moveKart(sensorData *data);
 
 #endif
