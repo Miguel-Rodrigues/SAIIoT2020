@@ -11,6 +11,10 @@
 		},
 		{
 			"path": "Project\\Src\\AccelKartServer"
+		},
+		{
+			"name": "SAIIoT2020 @ master",
+			"uri": "gitlens://master/d:/Projetos/Escola/SAIIoT2020?{\"path\":\"/d:/Projetos/Escola/SAIIoT2020\",\"ref\":\"master\",\"repoPath\":\"d:/Projetos/Escola/SAIIoT2020\"}"
 		}
 	],
 	"settings": {
@@ -27,7 +31,8 @@
 			"string": "cpp",
 			"unordered_map": "cpp",
 			"unordered_set": "cpp",
-			"string_view": "cpp"
+			"string_view": "cpp",
+			"xmemory": "cpp"
 		}
 	}
 }

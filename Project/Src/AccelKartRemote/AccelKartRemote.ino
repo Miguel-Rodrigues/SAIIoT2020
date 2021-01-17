@@ -3,9 +3,8 @@
 // Accelerometer Kart Remote control
 // Group 8
 
-#include <WiFi.h>
-#include <HTTPClient.h>
 #include "Accelerometer.h"
+#include "AccelKartClient.h"
 
 void setup()
 {
@@ -15,13 +14,19 @@ void setup()
   Serial.println("== Program Start ==");
 
   initializeSensor();
+  initializeWiFi();
 
   Serial.println("Load completed!");
 }
 
 void loop()
 {
-  sensorData* data = getSensorData();
+  sensorData *data = getSensorData();
+
+  if (moveKart(data) == 0)
+  {
+    abort();
+  }
 
   Serial.println();
 

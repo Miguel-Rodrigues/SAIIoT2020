@@ -5,7 +5,6 @@
 
 #ifndef __Accelerometer__H__
 #define __Accelerometer__H__
-#pragma once
 
 #include <Wire.h>
 #include <SPI.h>
