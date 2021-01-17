@@ -88,8 +88,7 @@ void setup()
   if (Wire.begin(SDA_1, SCL_1) == false)
   {
     Serial.println("Failed to start I2C Port.");
-    while (1)
-      ;
+    while (1);
   }
 
   Serial.println("Initializing 9DOF sensor...");
@@ -109,7 +108,6 @@ void setup()
 
 void loop()
 {
-  Serial.println("Entering loop");
   sensorData* data = new sensorData();
   // Update the sensor values whenever new data is available
   if (imu.gyroAvailable())
@@ -127,20 +125,15 @@ void loop()
     imu.readMag();
   }
 
-  if ((lastPrint + PRINT_SPEED) < millis())
-  {
-    getGyro(data);  // Print "G: gx, gy, gz"
-    getAccel(data); // Print "A: ax, ay, az"
-    getMag(data);   // Print "M: mx, my, mz"
-    getButtons(data);
-    getAttitude(data);
+  getGyro(data);  // Print "G: gx, gy, gz"
+  getAccel(data); // Print "A: ax, ay, az"
+  getMag(data);   // Print "M: mx, my, mz"
+  getButtons(data);
+  getAttitude(data);
 
-    Serial.println();
+  Serial.println();
 
-    lastPrint = millis(); // Update lastPrint time
-  }
-
-    Serial.println("Ending loop.");
+  delay(500);
 }
 
 void getGyro(sensorData *sensorData)
