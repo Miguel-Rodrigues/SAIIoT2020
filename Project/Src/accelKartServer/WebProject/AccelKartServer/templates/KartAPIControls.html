@@ -36,8 +36,19 @@
     <main role="main" class="container">
       <h1 class="mt-5">Accelerometer controlled kart.</h1>
       <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>
-
-      <div id="joypad">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div id="joypad"></div>
+          </div>
+          <div class="col-8">
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button id="button1" class="btn btn-primary" type="button">Button</button>
+              <button id="button2" class="btn btn-danger" type="button">Button</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <footer class="footer">
       <div class="container">
