@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bas
 
 # https://mikesmithers.wordpress.com/2017/02/21/configuring-django-with-apache-on-a-raspberry-pi/
 # install dependency packages
@@ -20,7 +20,7 @@ chmod +x virtualhost
 wget -O virtualhost-nginx https://raw.githubusercontent.com/RoverWire/virtualhost/master/virtualhost-nginx.sh
 chmod +x virtualhost-nginx
 
-virtualhost create "accelKartServer.local" cd ..
+virtualhost create "accelKartServer.local" /var/www/accelkartServer
 
 # Configure permissions
 chmod g+w /var/www/accelkartServer/db.sqlite3
