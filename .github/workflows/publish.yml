@@ -24,4 +24,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: AccelKartServer
-        path: ${{ github.workspace }}/Project/Src/accelKartServer/
+        path: ${{ github.workspace }}/Project/Src/AccelKartServer/
