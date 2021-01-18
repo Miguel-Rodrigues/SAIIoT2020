@@ -28,7 +28,9 @@ SECRET_KEY = '2e5(*x8nq)u!)*5o+#_(35uqmpw60*ilavvmpf7dm6n61#2)fw'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1', socket.gethostbyname(socket.gethostname()), "accelKartServer.local"
+    'localhost', '127.0.0.1', "accelKartServer.local",
+    socket.gethostbyname(socket.gethostname()),
+    socket.gethostname()
 ]
 
 # Application definition
@@ -124,3 +126,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "static"
