@@ -24,13 +24,12 @@ void initializeWiFi(char const * ssid, char const * password, char const * addre
 
 int moveKart(sensorData *data)
 {
-    String call = "AccelKartServer";
     HTTPClient http;
     int httpResponseCode = 0;
 
     if (WiFi.status() == WL_CONNECTED)
     {
-        http.begin(address + call);
+        http.begin(address);
         http.addHeader("Content-Type", "application/json");
 
         Serial.println("Sending data...");
@@ -50,12 +49,13 @@ int moveKart(sensorData *data)
         if (httpResponseCode == 200)
         {
             String response = http.getString();
-            Serial.println(httpResponseCode);
+            Serial.print(httpResponseCode);
+            Serial.print(": ");
             Serial.println(response);
         }
         else
         {
-            Serial.println("Error on sending POST:");
+            Serial.print("Error on sending POST: ");
             Serial.println(httpResponseCode);
         }
 

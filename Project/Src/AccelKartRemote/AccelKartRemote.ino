@@ -10,7 +10,7 @@
 
 char const * ssid = "Viniltejo";
 char const * ssidPassword = "arb6lvfc";
-char const * address = "http://192.168.1.77:8000/";
+char const * address = "http://raspberrypi/AccelKartServer";
 
 void setup()
 {
