@@ -1,67 +1,48 @@
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java#publishing-using-gradle
+# # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# # For more information see: https://github.com/actions/setup-java#publishing-using-gradle
 
-name: Deploy on Raspberry PIs
+# name: Deploy on Raspberry PIs
 
-on:
-  workflow_run:
-      workflows: ["Gradle Package"]
-      types:
-        - completed
+# on:
+#   workflow_run:
+#       workflows: ["Publish AccelKartServer"]
+#       types:
+#         - completed
 
-jobs:
-  Deploy_on_Raspberry_PI_1:
-    runs-on: ["self-hosted", "rpi1"]
+# jobs:
+#   Deploy_on_Raspberry_PI_1:
+#     runs-on: ["self-hosted", "rpi1"]
 
-    steps:
-    - name: Clean Workspace
-      run: rm -R ./*
+#     steps:
+#     - name: Clean Workspace
+#       run: rm -R ./*
       
-    - name: Download 'iscte.saiiot2020.accelkart'
-      uses: dawidd6/action-download-artifact@v2.10.0
-      with:
-        workflow: publish.yml
-        name: 'iscte.saiiot2020.accelkart'
+#     - name: Download 'AccelKartServer'
+#       uses: dawidd6/action-download-artifact@v2.10.0
+#       with:
+#         workflow: publish.yml
+#         name: 'AccelKartServer'
 
-    - name: Display structure of downloaded files
-      run: ls -R
+#     - name: Display structure of downloaded files
+#       run: ls -R
 
-    - name: Unzip Package
-    - run: tar -xvf app.tar ./app
+#     - name: Unzip Package
+#     - run: tar -xvf app.tar ./app
 
-    # - name: Stop Service\
-    # - run:
+#     - name: Stop httpd
+#     - run: service httpd stop
 
-    # - name: Install Service
-    # - run:
+#     # - name: Install Django server
+#     # - run: 
+
+#     - name: Start httpd
+#     - run: service httpd start
+
+#     # - name: Stop Service\
+#     # - run:
+
+#     # - name: Install Service
+#     # - run:
     
-    # - name: start Service
-    #   run: 
-
-  Deploy_on_Raspberry_PI_2:
-    runs-on: ["self-hosted", "rpi2"]
-
-    steps:
-    - name: Clean Workspace
-      run: rm -R ./*
-      
-    - name: Download 'iscte.saiiot2020.accelkart'
-      uses: dawidd6/action-download-artifact@v2.10.0
-      with:
-        workflow: publish.yml
-        name: 'iscte.saiiot2020.accelkart'
-
-    - name: Display structure of downloaded files
-      run: ls -R
-
-    - name: Unzip Package
-    - run: tar -xvf app.tar ./app
-
-    # - name: Stop Service
-    # - run:
-
-    # - name: Install Service
-    # - run:
-    
-    # - name: start Service
-    #   run: 
+#     # - name: start Service
+#     #   run: 
