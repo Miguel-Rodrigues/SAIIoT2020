@@ -21,8 +21,17 @@ echo "== Install python virtual environment =="
 virtualenv env
 source ./env/bin/activate
 pip install -r ./requirements.txt
+pip install mod-wsgi
+mod_wsgi-express install-module
 deactivate
+
+echo "== Copy Virtual host =="
 mv ./AccelKartServer.local.conf /etc/apache2/sites-available
+
+echo "== install static dependencies =="
+cd ./WebProject/AccelKartServer/static/
+npm install
+cd ../../../
 
 echo "== Configure permissions =="
 chmod g+w /var/www/AccelkartServer/db.sqlite3
@@ -30,7 +39,7 @@ chmod g+w /var/www/AccelkartServer
 chown :www-data db.sqlite3
 chown :www-data /var/www/AccelkartServer
 
-echo "== Restart HTTPD server =="
+echo "== Restart apache2 server =="
 service apache2 restart
 
 echo "All done! You may need to Reboot..."
