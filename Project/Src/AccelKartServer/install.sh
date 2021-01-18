@@ -2,6 +2,9 @@
 
 # https://mikesmithers.wordpress.com/2017/02/21/configuring-django-with-apache-on-a-raspberry-pi/
 # install dependency packages
+echo "== Purge old installation =="
+rm -r /var/www/AccelkartServer
+
 echo "== Install/Update dependencies =="
 apt-get update -y
 apt-get upgrade -y
@@ -24,7 +27,8 @@ pip install -r ./requirements.txt
 pip install mod-wsgi
 mod_wsgi-express install-module
 cd ./WebProject
-./manage.py collectstatic
+chmod 775 ./manage.py
+./manage.py collectstatic --noinput
 cd ..
 deactivate
 
@@ -32,7 +36,7 @@ echo "== Copy Virtual host =="
 mv ./AccelKartServer.local.conf /etc/apache2/sites-available
 
 echo "== install static dependencies =="
-cd ./WebProject/AccelKartServer/static/
+cd ./WebProject/static/AccelKartServer/
 npm install
 cd ../../../
 
