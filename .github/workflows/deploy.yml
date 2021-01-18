@@ -2,9 +2,10 @@ name: Deploy on Raspberry PIs
 
 on:
   workflow_run:
-      workflows: ["Publish AccelKartServer"]
-      types:
-        - completed
+    workflows: ["Publish AccelKartServer"]
+    branches: [master]
+    types: 
+      - completed
 
 jobs:
   Deploy_on_Raspberry_PI_1:
