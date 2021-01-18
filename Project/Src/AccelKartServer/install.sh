@@ -23,6 +23,9 @@ source ./env/bin/activate
 pip install -r ./requirements.txt
 pip install mod-wsgi
 mod_wsgi-express install-module
+cd ./WebProject
+./manage.py collectstatic
+cd ..
 deactivate
 
 echo "== Copy Virtual host =="
