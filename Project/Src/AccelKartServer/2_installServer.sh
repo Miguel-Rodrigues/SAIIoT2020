@@ -1,14 +1,10 @@
 #!/bin/bash
 
 # https://mikesmithers.wordpress.com/2017/02/21/configuring-django-with-apache-on-a-raspberry-pi/
-# install dependency packages
 echo "== Purge old installation =="
 rm -r /var/www/AccelkartServer
 
 echo "== Install/Update dependencies =="
-apt-get update -y
-apt-get dist-upgrade -y
-apt-get autoremove -y
 apt-get install matchbox-keyboard apache2-dev apache2 libapache2-mod-wsgi-py3 python3 git -y
 pip3 install virtualenv
 
