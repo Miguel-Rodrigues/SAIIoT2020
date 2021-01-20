@@ -42,6 +42,9 @@ chmod g+w /var/www/AccelkartServer
 chown :www-data db.sqlite3
 chown :www-data /var/www/AccelkartServer
 
+echo "== Enable website =="
+a2ensite AccelKartServer.local
+
 echo "== Restart apache2 server =="
 service apache2 restart
 
