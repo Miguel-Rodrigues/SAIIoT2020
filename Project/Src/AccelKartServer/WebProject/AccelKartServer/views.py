@@ -19,22 +19,15 @@ def joypad(request):
 def apiOverview(request):
     api_urls = {
         "VirtualKartJoypad" : "/",
-        "APIOverview" : "/api/",
-        "MoveKart" : "/MoveKart/",
-        "OpenAPI" : "/openAPI/",
-        "SwaggerUI" : "/swagger/",
+        "APIOverview"       : "/api/",
+        "MoveKart"          : "/api/moveKart/",
+        "OpenAPI"           : "/api/openAPI/",
+        "SwaggerUI"         : "/api/swagger/",
     }
 
     return Response(api_urls)
 
 @api_view(['POST'])
 def moveKart(self, request):
-    # try:
     self.kartDriverService.moveKart(request)
     return JsonResponse({"Status" : "OK"})
-
-    # except:
-    #     return JsonResponse({
-    #         "Status" : "NOK",
-    #         "Reasons" : sys.exc_info()
-    #     })

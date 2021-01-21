@@ -8,6 +8,6 @@ urlpatterns = [
     path('/', views.joypad, name="Kart Virtual Joypad"),
     path('/api/', views.apiOverview, name="API Overview"),
     path('/api/moveKart/', views.moveKart, name="Move Kart"),
-    path('/api/openapi/', get_schema_view(title="Accelerometer Kart Service OpenAPI", description="API for developers to use our kart service"), name='openapi-schema'),
+    path('/api/openAPI/', get_schema_view(title="Accelerometer Kart Service OpenAPI", description="API for developers to use our kart service"), name='openapi-schema'),
     path('/api/swagger/', TemplateView.as_view(template_name='documentation.html', extra_context={'schema_url':'openapi-schema'}), name='Swagger UI'),
 ] 

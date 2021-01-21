@@ -8,15 +8,14 @@
 
 #define deviceName "AccelKartRemote ESP32 9-DOF Smart Sensor"
 
-char const *ssid = "AccelKartNetwork";
-char const *ssidPassword = "arb6lvfc";
-char const *address = "http://raspberrypi/AccelKartServer/";
+char const * ssid = "AccelKartNetwork";
+char const * ssidPassword = "arb6lvfc";
+char const * address = "http://raspberrypi/AccelKartServer/";
 
 void setup()
 {
     Serial.begin(115200);
-    while (!Serial)
-        ;
+    while (!Serial);
 
     Serial.println("== Program Start ==");
 

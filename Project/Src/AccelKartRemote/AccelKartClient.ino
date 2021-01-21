@@ -33,7 +33,7 @@ int moveKart(sensorData *data)
 {
     HTTPClient http;
     int httpResponseCode = 0;
-    const char* const call = "MoveKart/";
+    const char* const call = "api/moveKart/";
     char endpoint[100];
 
     if (WiFi.status() == WL_CONNECTED)
