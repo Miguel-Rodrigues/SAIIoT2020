@@ -28,6 +28,6 @@ def apiOverview(request):
     return Response(api_urls)
 
 @api_view(['POST'])
-def moveKart(self, request):
-    self.kartDriverService.moveKart(request)
+def moveKart(request):
+    kartDriverService.moveKart(request)
     return JsonResponse({"Status" : "OK"})
