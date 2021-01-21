@@ -1,31 +1,40 @@
 # AccelKartServer/views.py
 from django.http.response import JsonResponse
-from django.views.generic.base import View
-from rest_framework.generics import ListCreateAPIView
-from .services.KartDriverService import KartDriverService
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+# from .services.KartDriverService import KartDriverService
 from django.template.response import TemplateResponse
 
 import sys
 
-class KartAPI(ListCreateAPIView):
+# kartDriverService: KartDriverService = KartDriverService()
 
-    kartDriverService: KartDriverService
+@api_view(['GET'])
+def joypad(request):
+    response = TemplateResponse(request, 'KartAPIControls.html', {})
+    return response
 
-    def __init__(self):
-        self.kartDriverService = KartDriverService()
-        pass
+@api_view(['GET'])
+def apiOverview(request):
+    api_urls = {
+        "VirtualKartJoypad" : "/",
+        "APIOverview" : "/api/",
+        "MoveKart" : "/MoveKart/",
+        "OpenAPI" : "/openAPI/",
+        "SwaggerUI" : "/swagger/",
+    }
 
-    def get(self, request):
-        response = TemplateResponse(request, 'KartAPIControls.html', {})
-        return response
+    return Response(api_urls)
 
-    def post(self, request):
-        # try:
-        self.kartDriverService.updateKartMovement(request)
-        return JsonResponse({"Status" : "OK"})
+@api_view(['POST'])
+def moveKart(self, request):
+    # try:
+    # self.kartDriverService.moveKart(request)
+    return JsonResponse({"Status" : "OK"})
 
-        # except:
-        #     return JsonResponse({
-        #         "Status" : "NOK",
-        #         "Reasons" : sys.exc_info()
-        #     })
+    # except:
+    #     return JsonResponse({
+    #         "Status" : "NOK",
+    #         "Reasons" : sys.exc_info()
+    #     })
