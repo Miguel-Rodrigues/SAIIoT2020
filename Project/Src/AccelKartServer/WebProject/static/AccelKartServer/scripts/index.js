@@ -49,7 +49,7 @@ $(document).ready(function () {
                 refresh = true;
             }, 200);
     
-            $.post("/AccelKartServer/api/MoveKart/", controls)
+            $.post("/AccelKartServer/api/moveKart/", controls)
                 .done(function(data, textStatus) {
                     $("#output").val(
                         $("#output").val() +
