@@ -5,7 +5,14 @@
 
 #include "AccelKartClient.h"
 
-const char* moveKartTemplate = "{\"name\":\"%s\",\"gyro\":{\"x\":%f,\"y\":%f,\"z\":%f},\"accel\":{\"x\":%f,\"y\":%f,\"z\":%f},\"compass\":{\"x\":%f,\"y\":%f,\"z\":%f},\"pitch\":%f,\"roll\":%f,\"heading\":%f,\"button1\":%s,\"button2\":%s}";
+const char* moveKartTemplate = "{"
+    "\"name\":\"%s\","
+    "\"gyro\":{\"x\":%f,\"y\":%f,\"z\":%f},"
+    "\"accel\":{\"x\":%f,\"y\":%f,\"z\":%f},"
+    "\"compass\":{\"x\":%f,\"y\":%f,\"z\":%f},"
+    "\"pitch\":%f,\"roll\":%f,\"heading\":%f,"
+    "\"button1\":%s,\"button2\":%s"
+"}";
 
 void initializeWiFi(char const * ssid, char const * password, char const * address)
 {
@@ -26,10 +33,15 @@ int moveKart(sensorData *data)
 {
     HTTPClient http;
     int httpResponseCode = 0;
+    const char* const call = "MoveKart/";
+    char endpoint[100];
 
     if (WiFi.status() == WL_CONNECTED)
     {
-        http.begin(address);
+        strcpy(endpoint, address);
+        strcat(endpoint, call);
+
+        http.begin(endpoint);
         http.addHeader("Content-Type", "application/json");
 
         Serial.println("Sending data...");

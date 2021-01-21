@@ -8,34 +8,35 @@
 
 #define deviceName "AccelKartRemote ESP32 9-DOF Smart Sensor"
 
-char const * ssid = "Viniltejo";
-char const * ssidPassword = "arb6lvfc";
-char const * address = "http://raspberrypi/AccelKartServer";
+char const *ssid = "AccelKartNetwork";
+char const *ssidPassword = "arb6lvfc";
+char const *address = "http://raspberrypi/AccelKartServer/";
 
 void setup()
 {
-  Serial.begin(115200);
-  while (!Serial);
+    Serial.begin(115200);
+    while (!Serial)
+        ;
 
-  Serial.println("== Program Start ==");
+    Serial.println("== Program Start ==");
 
-  initializeSensor(deviceName);
-  initializeWiFi(ssid, ssidPassword, address);
+    initializeSensor(deviceName);
+    initializeWiFi(ssid, ssidPassword, address);
 
-  Serial.println("Load completed!");
+    Serial.println("Load completed!");
 }
 
 void loop()
 {
-  sensorData *data = getSensorData();
+    sensorData *data = getSensorData();
 
-  // Reboots board if WiFi connection has lost.
-  if (moveKart(data) == 0)
-  {
-    abort();
-  }
+    // Reboots board if WiFi connection has lost.
+    if (moveKart(data) == 0)
+    {
+        abort();
+    }
 
-  Serial.println();
+    Serial.println();
 
-  delay(500);
+    delay(500);
 }
