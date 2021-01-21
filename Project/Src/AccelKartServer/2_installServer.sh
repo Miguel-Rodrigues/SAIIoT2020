@@ -20,7 +20,7 @@ echo "== Install python virtual environment =="
 virtualenv env
 source ./env/bin/activate
 pip install -r ./requirements.txt
-pip install mod-wsgi
+pip install mod-wsgi RPi.GPIO
 mod_wsgi-express install-module
 cd ./WebProject
 chmod 775 ./manage.py
