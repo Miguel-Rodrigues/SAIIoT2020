@@ -5,7 +5,7 @@ echo "== Purge old installation =="
 rm -r /var/www/AccelkartServer
 
 echo "== Install/Update dependencies =="
-apt-get install matchbox-keyboard apache2-dev apache2 libapache2-mod-wsgi-py3 python3 git -y
+apt-get install matchbox-keyboard apache2-dev apache2 libapache2-mod-wsgi-py3 python3 git nodejs -y
 pip3 install virtualenv
 
 echo "== Create Root folder =="
