@@ -3,12 +3,12 @@ from django.http.response import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-# from .services.KartDriverService import KartDriverService
+from .services.KartDriverService import KartDriverService
 from django.template.response import TemplateResponse
 
 import sys
 
-# kartDriverService: KartDriverService = KartDriverService()
+kartDriverService: KartDriverService = KartDriverService()
 
 @api_view(['GET'])
 def joypad(request):
@@ -30,7 +30,7 @@ def apiOverview(request):
 @api_view(['POST'])
 def moveKart(self, request):
     # try:
-    # self.kartDriverService.moveKart(request)
+    self.kartDriverService.moveKart(request)
     return JsonResponse({"Status" : "OK"})
 
     # except:
