@@ -65,7 +65,7 @@ class KartDriverService(metaclass=SingletonMeta):
             yield pwm
 
     def moveKart(self, request):
-        print("hit!" + self.value)
+        print("hit!" + request)
         self.__watchdog.reset()
         pass
 
