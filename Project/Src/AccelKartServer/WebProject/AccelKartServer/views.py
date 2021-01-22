@@ -29,5 +29,5 @@ def apiOverview(request):
 
 @api_view(['POST'])
 def moveKart(request):
-    kartDriverService.moveKart(request)
+    kartDriverService.moveKart(request.data)
     return JsonResponse({"Status" : "OK"})
