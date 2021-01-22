@@ -1,10 +1,13 @@
 # AccelKartServer/views.py
 from django.http.response import JsonResponse
+from rest_framework import serializers
+from rest_framework.exceptions import bad_request
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services.KartDriverService import KartDriverService
 from django.template.response import TemplateResponse
+from . import models
 
 import sys
 
@@ -29,5 +32,12 @@ def apiOverview(request):
 
 @api_view(['POST'])
 def moveKart(request):
-    kartDriverService.moveKart(request.data)
-    return JsonResponse({"Status" : "OK"})
+    model = models.SensorDataSerializer(data = request.data)
+    if (model.is_valid()):
+        print("request:")
+        data: models.SensorData = model.validated_data
+        print(data.__dict__)
+        kartDriverService.moveKart(data)
+        return JsonResponse({"Status" : "OK"})
+    else:
+        raise serializers.ValidationError({"Status": "NOT OK", "Fields": model.errors})
