@@ -1,6 +1,5 @@
 # AccelKartServer/services/KartDriverService.py
 from threading import Lock
-from typing import List
 from .WatchdogService import WatchdogService
 import logging
 import RPi.GPIO as GPIO
@@ -65,7 +64,7 @@ class KartDriverService(metaclass=SingletonMeta):
         pass
 
     def __initMotor(self, pins, frequency):
-        pwms = List()
+        pwms = list()
         for pin in pins:
             GPIO.setup(pin, GPIO.OUT)
             pwm = GPIO.PWM(pin, frequency)
