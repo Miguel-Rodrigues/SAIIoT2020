@@ -76,7 +76,7 @@ class KartDriverService(metaclass=SingletonMeta):
         pwm.start(0)
         return pwm
     
-    def calculateRatio(value, deadZone, threshold):
+    def calculateRatio(self, value, deadZone, threshold):
         ratio = value
         if value < threshold:
             if value < deadZone:
