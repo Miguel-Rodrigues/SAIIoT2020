@@ -41,12 +41,14 @@ class KartDriverService(metaclass=SingletonMeta):
     __watchdog: WatchdogService
     __leftMotorPins = (26, 19)
     __rightMotorPins = (13, 8)
+    __frequency = 100
+    __rollThreshold = 60
+    __pitchThreshold = 45
+    __deadZone = 2
+
     __leftPWMs: None
     __rightPWMs: None
-    __isLeftMotorClockwise = True
-    __isRightMotorClockwise = True
-    __frequency = 100
-
+    
     def __init__(self): 
         print("Initializing Kart Driver Service")
         self.__watchdog = WatchdogService(1000, self.stopKart)
@@ -65,9 +67,38 @@ class KartDriverService(metaclass=SingletonMeta):
             yield pwm
 
     def moveKart(self, request):
-        print("hit!")
+        # {
+        #     "name": "",
+        #     "gyro": { "x" : 0 , "y" : 0, "z" : 0 },
+        #     "accel": { "x" : 0 , "y" : 0, "z" : 0 },
+        #     "compass": { "x" : 0 , "y" : 0, "z" : 0 },
+        #     "pitch": 0, "roll" : 0, "heading" : 0,
+        #     "button1": True, "button2" : False
+        # }
+
+        pitchRatio = (self.__pitchThreshold if request.pitch > self.__pitchThreshold else request.pitch) / self.__pitchThreshold
+        rollRatio = (self.__rollThreshold if request.roll > self.__rollThreshold else request.roll) / self.__rollThreshold
+        rightDirection = rollRatio >= 0
+
+        if (pitchRatio >= 0):
+            if (rightDirection == True):
+                self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
+            else:
+                self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio/2))
+        else:
+            if (rightDirection == True):
+                self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
+            else:
+                self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio/2), 0)
+        
         self.__watchdog.reset()
         pass
+
+    def setDutyCycles(self, pwm1, pwm2, pwm3, pwm4):
+        self.__leftPWMs[1].ChangeDutyCycle(pwm1)
+        self.__leftPWMs[0].ChangeDutyCycle(pwm2)
+        self.__rightPWMs[1].ChangeDutyCycle(pwm3)
+        self.__rightPWMs[0].ChangeDutyCycle(pwm4)
 
     def stopKart(self):
         [pwm.ChangeDutyCycle(0) for pwm in self.__leftPWMs +  self.__rightPWMs]
