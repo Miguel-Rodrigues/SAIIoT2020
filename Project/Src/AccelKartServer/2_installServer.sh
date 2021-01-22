@@ -41,6 +41,7 @@ chmod g+w /var/www/AccelkartServer/db.sqlite3
 chmod g+w /var/www/AccelkartServer
 chown :www-data db.sqlite3
 chown :www-data /var/www/AccelkartServer
+usermod -a -G gpio www-data
 
 echo "== Enable website =="
 a2ensite AccelKartServer.local
