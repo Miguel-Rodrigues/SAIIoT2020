@@ -109,12 +109,12 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger.debug("left PWMs: " + str(left))
         self.__logger.debug("right PWMs: " + str(right))
 
-        self.__leftPWMs[1].ChangeDutyCycle(left(0) * 100)
-        self.__leftPWMs[0].ChangeDutyCycle(left(1) * 100)
-        self.__rightPWMs[1].ChangeDutyCycle(right(0) * 100)
-        self.__rightPWMs[0].ChangeDutyCycle(right(1) * 100)
+        self.__leftPWMs[0].ChangeDutyCycle(left[0]* 100)
+        self.__leftPWMs[1].ChangeDutyCycle(left[1]* 100)
+        self.__rightPWMs[0].ChangeDutyCycle(right[0]* 100)
+        self.__rightPWMs[1].ChangeDutyCycle(right[1]* 100)
 
     def stopKart(self):
         self.__logger.debug("Watchdog bitten the cat!!")
-        [pwm.ChangeDutyCycle(0) for pwm in self.__leftPWMs +  self.__rightPWMs]
+        [pwm.ChangeDutyCycle[0] for pwm in self.__leftPWMs +  self.__rightPWMs]
         pass
