@@ -6,9 +6,9 @@ class Point3D:
     z: float = 0
     pass
 class Point3DSerializer(serializers.Serializer):
-    x: serializers.DecimalField(10, 2, default = 0)
-    y: serializers.DecimalField(10, 2, default = 0)
-    z: serializers.DecimalField(10, 2, default = 0)
+    x: serializers.DecimalField(10, 6, default = 0)
+    y: serializers.DecimalField(10, 6, default = 0)
+    z: serializers.DecimalField(10, 6, default = 0)
     pass
 
 class SensorData:
@@ -28,9 +28,9 @@ class SensorDataSerializer(serializers.Serializer):
     accel = Point3DSerializer(many=False, default=Point3D())
     gyro = Point3DSerializer(many=False, default=Point3D())
     compass = Point3DSerializer(many=False, default=Point3D())
-    pitch = serializers.DecimalField(10, 2, default = 0)
-    roll = serializers.DecimalField(10, 2, default = 0)
-    heading = serializers.DecimalField(10, 2, default = 0)
+    pitch = serializers.DecimalField(10, 6, default = 0)
+    roll = serializers.DecimalField(10, 6, default = 0)
+    heading = serializers.DecimalField(10, 6, default = 0)
     button1 = serializers.BooleanField(default = False)
     button2 = serializers.BooleanField(default = False)
     pass
