@@ -33,23 +33,21 @@ int moveKart(sensorData *data)
 {
     HTTPClient http;
     int httpResponseCode = 0;
-    const char* const call = "api/moveKart/";
     char endpoint[100];
 
     if (WiFi.status() == WL_CONNECTED)
     {
-        strcpy(endpoint, address);
-        strcat(endpoint, call);
-
-        http.begin(endpoint);
+        http.begin(address);
         http.addHeader("Content-Type", "application/json");
 
-        Serial.println("Sending data...");
+        Serial.print("Sending data to '");
+        Serial.print(address);
+        Serial.println("'...");
 
         //Serializing data
         char payload[300];
         sprintf(payload, moveKartTemplate, data->name,
-            data->gyro.x, data->gyro.y, data->gyro.z,
+            data->gyro.x, data->gyro.y, data->gyro.z,      
             data->accel.x, data->accel.y, data->accel.z,
             data->compass.x, data->compass.y, data->compass.z,
             data->pitch, data->roll, data->heading,
@@ -58,19 +56,27 @@ int moveKart(sensorData *data)
 
         httpResponseCode = http.POST(String(payload));
 
-        if (httpResponseCode == 200)
+        if (httpResponseCode > 0) 
         {
             String response = http.getString();
-            Serial.print(httpResponseCode);
-            Serial.print(": ");
+            if(httpResponseCode >= 200 && httpResponseCode < 400)
+            {
+                Serial.println(httpResponseCode);
+                Serial.print(": ");
+            }
+            else {
+                Serial.print("Error on sending POST: ");
+                Serial.println(httpResponseCode);
+                Serial.print("Message: ");
+            }
+
             Serial.println(response);
         }
         else
         {
-            Serial.print("Error on sending POST: ");
+            Serial.print("Unknown Error: ");
             Serial.println(httpResponseCode);
         }
-
         http.end();
     }
     else
