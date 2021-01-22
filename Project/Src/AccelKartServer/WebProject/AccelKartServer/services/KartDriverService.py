@@ -75,6 +75,18 @@ class KartDriverService(metaclass=SingletonMeta):
         pwm = GPIO.PWM(pin, frequency)
         pwm.start(0)
         return pwm
+    
+    def calculateRatio(value, deadZone, threshold):
+        ratio = value
+        if value < threshold:
+            if value < deadZone:
+                ratio = 0
+        else:
+            ratio = threshold
+            pass
+        
+        ratio = ratio / threshold * 100
+        return ratio
 
     def moveKart(self, request):
         # {
@@ -86,31 +98,15 @@ class KartDriverService(metaclass=SingletonMeta):
         #     "button1": True, "button2" : False
         # }
 
-        pitchRatio = request.pitch
-        rollRatio = request.roll
-
         self.__logger.debug("Calculating pwm ratios")
-        if request.pitch < self.__pitchThreshold:
-            if request.pitch < self.__deadZone:
-                pitchRatio = 0
-        else:
-            pitchRatio = self.__pitchThreshold
-
-        if request.roll < self.__rollThreshold:
-            if request.roll < self.__deadZone:
-                rollRatio = 0
-        else:
-            rollRatio = self.__rollThreshold
-        
-        pitchRatio = pitchRatio / self.__pitchThreshold
-        rollRatio = rollRatio / self.__rollThreshold
-
+        pitchRatio = self.calculateRatio(request.pitch, self.__deadZone, self.__pitchThreshold)
+        rollRatio = self.calculateRatio(request.roll, self.__deadZone, self.__rollThreshold)
         rightDirection = rollRatio >= 0
 
         self.__logger.debug("Setting duty cycles")
         if (pitchRatio >= 0):
             if (rightDirection == True):
-                self.setDutyCycles(0, pitchRatio * 1 - rollRatio/2), (0, pitchRatio)
+                self.setDutyCycles(0, pitchRatio * 1 - rollRatio/2, 0, pitchRatio)
             else:
                 self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio/2))
         else:
@@ -127,10 +123,10 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger.debug("left PWMs: (" + str(left1) + ", " + str(left1))
         self.__logger.debug("right PWMs: (" + str(right1) + ", " + str(right2))
 
-        self.__leftPWM1.ChangeDutyCycle(left1 * 100)
-        self.__leftPWM2.ChangeDutyCycle(left2 * 100)
-        self.__rightPWM1.ChangeDutyCycle(right1 * 100)
-        self.__rightPWM2.ChangeDutyCycle(right2 * 100)
+        self.__leftPWM1.ChangeDutyCycle(left1)
+        self.__leftPWM2.ChangeDutyCycle(left2)
+        self.__rightPWM1.ChangeDutyCycle(right1)
+        self.__rightPWM2.ChangeDutyCycle(right2)
 
     def stopKart(self):
         self.__logger.debug("Watchdog bitten the cat!!")
