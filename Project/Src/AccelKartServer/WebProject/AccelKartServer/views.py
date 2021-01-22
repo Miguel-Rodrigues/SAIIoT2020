@@ -34,9 +34,7 @@ def apiOverview(request):
 def moveKart(request):
     model = models.SensorDataSerializer(data = request.data)
     if (model.is_valid()):
-        print("request:")
-        data: models.SensorData = model.validated_data
-        print(data.__dict__)
+        data: models.SensorData = models.SensorData(request.data)
         kartDriverService.moveKart(data)
         return JsonResponse({"Status" : "OK"})
     else:
