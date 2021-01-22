@@ -1,6 +1,7 @@
 # AccelKartServer/services/KartDriverService.py
 from threading import Lock
 from .WatchdogService import WatchdogService
+import logging
 import RPi.GPIO as GPIO
 
 class SingletonMeta(type):
@@ -48,9 +49,12 @@ class KartDriverService(metaclass=SingletonMeta):
 
     __leftPWMs: None
     __rightPWMs: None
-    
+
+    __logger: logging.Logger
+
     def __init__(self): 
-        print("Initializing Kart Driver Service")
+        self.__logger = logging.getLogger(__name__)
+        self.__logger.info("Initializing Kart Driver Service")
         self.__watchdog = WatchdogService(1000, self.stopKart)
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -76,10 +80,12 @@ class KartDriverService(metaclass=SingletonMeta):
         #     "button1": True, "button2" : False
         # }
 
+        self.__logger.debug("Calculating pwm ratios")
         pitchRatio = (self.__pitchThreshold if request.pitch > self.__pitchThreshold else request.pitch) / self.__pitchThreshold
         rollRatio = (self.__rollThreshold if request.roll > self.__rollThreshold else request.roll) / self.__rollThreshold
         rightDirection = rollRatio >= 0
 
+        self.__logger.debug("Setting duty cycles")
         if (pitchRatio >= 0):
             if (rightDirection == True):
                 self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
@@ -91,15 +97,22 @@ class KartDriverService(metaclass=SingletonMeta):
             else:
                 self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio/2), 0)
         
+        self.__logger.debug("Restart whatchdog")
         self.__watchdog.reset()
         pass
 
     def setDutyCycles(self, pwm1, pwm2, pwm3, pwm4):
-        self.__leftPWMs[1].ChangeDutyCycle(pwm1)
-        self.__leftPWMs[0].ChangeDutyCycle(pwm2)
-        self.__rightPWMs[1].ChangeDutyCycle(pwm3)
-        self.__rightPWMs[0].ChangeDutyCycle(pwm4)
+        self.__logger.debug("pwm1: " + str(pwm1))
+        self.__logger.debug("pwm2: " + str(pwm2))
+        self.__logger.debug("pwm3: " + str(pwm3))
+        self.__logger.debug("pwm4: " + str(pwm4))
+
+        self.__leftPWMs[1].ChangeDutyCycle(pwm1 * 100)
+        self.__leftPWMs[0].ChangeDutyCycle(pwm2 * 100)
+        self.__rightPWMs[1].ChangeDutyCycle(pwm3 * 100)
+        self.__rightPWMs[0].ChangeDutyCycle(pwm4 * 100)
 
     def stopKart(self):
+        self.__logger.debug("Watchdog bitten the cat!!")
         [pwm.ChangeDutyCycle(0) for pwm in self.__leftPWMs +  self.__rightPWMs]
         pass
