@@ -31,7 +31,11 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost', '127.0.0.1', "accelKartServer.local",
     socket.gethostbyname(socket.gethostname()),
-    socket.gethostname()
+    socket.gethostname(),
+
+    'localhost:8080', '127.0.0.1:8080', "accelKartServer.local:8080",
+    socket.gethostbyname(socket.gethostname()) + ":8080",
+    socket.gethostname() + ":8080"
 ]
 
 # Application definition
@@ -127,5 +131,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "static"
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

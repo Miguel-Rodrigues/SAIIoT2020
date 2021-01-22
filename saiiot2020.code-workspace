@@ -35,7 +35,17 @@
 			"xmemory": "cpp",
 			"system_error": "cpp",
 			"xlocale": "cpp",
-			"typeinfo": "cpp"
+			"typeinfo": "cpp",
+			"xlocinfo": "cpp",
+			"chrono": "cpp",
+			"compare": "cpp",
+			"functional": "cpp",
+			"memory": "cpp",
+			"ratio": "cpp",
+			"tuple": "cpp",
+			"type_traits": "cpp",
+			"utility": "cpp",
+			"xtr1common": "cpp"
 		}
 	}
 }
