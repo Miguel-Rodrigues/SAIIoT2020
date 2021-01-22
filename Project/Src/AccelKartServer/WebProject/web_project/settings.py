@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
     'localhost', '127.0.0.1', "accelKartServer.local",
     socket.gethostbyname(socket.gethostname()),
     socket.gethostname(),
-    "192.168.1.78"
+    "192.168.1.78",
 
     'localhost:8080', '127.0.0.1:8080', "accelKartServer.local:8080",
     socket.gethostbyname(socket.gethostname()) + ":8080",
