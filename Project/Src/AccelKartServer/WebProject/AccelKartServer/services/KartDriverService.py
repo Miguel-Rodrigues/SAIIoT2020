@@ -3,6 +3,7 @@ from threading import Lock
 from .WatchdogService import WatchdogService
 import logging
 import RPi.GPIO as GPIO
+import math as math
 
 class SingletonMeta(type):
     """
@@ -78,8 +79,8 @@ class KartDriverService(metaclass=SingletonMeta):
     
     def calculateRatio(self, value, deadZone, threshold):
         ratio = value
-        if value < threshold:
-            if value < deadZone:
+        if math.abs(value) < threshold:
+            if math.abs(value) < deadZone:
                 ratio = 0
         else:
             ratio = threshold
