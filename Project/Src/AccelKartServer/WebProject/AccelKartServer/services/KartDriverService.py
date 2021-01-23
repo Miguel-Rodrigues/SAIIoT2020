@@ -79,8 +79,8 @@ class KartDriverService(metaclass=SingletonMeta):
     
     def calculateRatio(self, value, deadZone, threshold):
         ratio = value
-        if math.abs(value) < threshold:
-            if math.abs(value) < deadZone:
+        if math.fabs(value) < threshold:
+            if math.fabs(value) < deadZone:
                 ratio = 0
         else:
             ratio = threshold
