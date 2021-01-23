@@ -77,13 +77,10 @@ class KartDriverService(metaclass=SingletonMeta):
         return pwm
     
     def calculateRatio(self, value, threshold):
-        ratio = value
-        if math.fabs(value) < threshold:
-            ratio = threshold
-            pass
-        
-        ratio = ratio / threshold
-        return ratio
+        if (math.fabs(value) > threshold):
+            return math.copysign(1, value)
+        else:
+            return value / threshold
 
     def moveKart(self, request):
         # {
@@ -98,6 +95,7 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger.debug("Calculating pwm ratios")
         pitchRatio = self.calculateRatio(request.pitch, self.__pitchThreshold)
         rollRatio = self.calculateRatio(request.roll, self.__rollThreshold)
+        self.__logger.debug("pitch: " + str(request.pitch) + ", roll: " + str(request.roll))
         self.__logger.debug("pitchRatio: " + str(pitchRatio) + ", rollRatio: " + str(rollRatio))
         
         self.__logger.debug("Setting duty cycles")
