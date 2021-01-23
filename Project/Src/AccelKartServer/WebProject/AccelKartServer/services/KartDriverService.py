@@ -102,7 +102,8 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger.debug("Calculating pwm ratios")
         pitchRatio = self.calculateRatio(request.pitch, self.__deadZone, self.__pitchThreshold)
         rollRatio = self.calculateRatio(request.roll, self.__deadZone, self.__rollThreshold)
-
+        self.__logger.debug("pitchRatio: " + str(pitchRatio) + ", rollRatio: " + str(rollRatio))
+        
         self.__logger.debug("Setting duty cycles")
         if (pitchRatio >= 0):
             if (rollRatio >= 0):
