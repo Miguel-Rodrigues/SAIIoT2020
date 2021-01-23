@@ -86,7 +86,7 @@ class KartDriverService(metaclass=SingletonMeta):
             ratio = threshold
             pass
         
-        ratio = ratio / threshold * 100
+        ratio = (ratio / threshold) * 100
         return ratio
 
     def moveKart(self, request):
@@ -120,7 +120,7 @@ class KartDriverService(metaclass=SingletonMeta):
         pass
 
     def setDutyCycles(self, left1, left2, right1, right2):
-        self.__logger.debug("left PWMs: (" + str(left1) + ", " + str(left1) + ")")
+        self.__logger.debug("left PWMs: (" + str(left1) + ", " + str(left2) + ")")
         self.__logger.debug("right PWMs: (" + str(right1) + ", " + str(right2) + ")")
 
         self.__leftPWM1.ChangeDutyCycle(left1)
