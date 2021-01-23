@@ -46,6 +46,7 @@ class KartDriverService(metaclass=SingletonMeta):
     __rightMotorPin1 = 13
     __rightMotorPin2 = 6
     __frequency = 100
+    __deadzone = 1
 
     __rollThreshold = 60
     __pitchThreshold = 45
@@ -76,8 +77,10 @@ class KartDriverService(metaclass=SingletonMeta):
         pwm.start(0)
         return pwm
     
-    def calculateRatio(self, value, threshold):
-        if (math.fabs(value) > threshold):
+    def calculateRatio(self, value, deadzone, threshold):
+        if (math.fabs(value) < deadzone):
+            return 0
+        elif (math.fabs(value) > threshold):
             return math.copysign(1, value)
         else:
             return value / threshold
@@ -93,8 +96,8 @@ class KartDriverService(metaclass=SingletonMeta):
         # }
 
         self.__logger.debug("Calculating pwm ratios")
-        pitchRatio = self.calculateRatio(request.pitch, self.__pitchThreshold)
-        rollRatio = self.calculateRatio(request.roll, self.__rollThreshold)
+        pitchRatio = self.calculateRatio(request.pitch, self.__deadzone, self.__pitchThreshold)
+        rollRatio = self.calculateRatio(request.roll, self.__deadzone, self.__rollThreshold)
         self.__logger.debug("pitch: " + str(request.pitch) + ", roll: " + str(request.roll))
         self.__logger.debug("pitchRatio: " + str(pitchRatio) + ", rollRatio: " + str(rollRatio))
         
@@ -109,7 +112,9 @@ class KartDriverService(metaclass=SingletonMeta):
                 self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
             else:
                 self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio / 2), 0)
+
         
+
         self.__logger.debug("Restart whatchdog")
         self.__watchdog.reset()
         pass
