@@ -49,7 +49,6 @@ class KartDriverService(metaclass=SingletonMeta):
 
     __rollThreshold = 60
     __pitchThreshold = 45
-    __deadZone = 2
 
     __leftPWM1: None
     __leftPWM2: None
@@ -77,12 +76,9 @@ class KartDriverService(metaclass=SingletonMeta):
         pwm.start(0)
         return pwm
     
-    def calculateRatio(self, value, deadZone, threshold):
+    def calculateRatio(self, value, threshold):
         ratio = value
         if math.fabs(value) < threshold:
-            if math.fabs(value) < deadZone:
-                ratio = 0
-        else:
             ratio = threshold
             pass
         
@@ -100,8 +96,8 @@ class KartDriverService(metaclass=SingletonMeta):
         # }
 
         self.__logger.debug("Calculating pwm ratios")
-        pitchRatio = self.calculateRatio(request.pitch, self.__deadZone, self.__pitchThreshold)
-        rollRatio = self.calculateRatio(request.roll, self.__deadZone, self.__rollThreshold)
+        pitchRatio = self.calculateRatio(request.pitch, self.__pitchThreshold)
+        rollRatio = self.calculateRatio(request.roll, self.__rollThreshold)
         self.__logger.debug("pitchRatio: " + str(pitchRatio) + ", rollRatio: " + str(rollRatio))
         
         self.__logger.debug("Setting duty cycles")
@@ -109,12 +105,12 @@ class KartDriverService(metaclass=SingletonMeta):
             if (rollRatio >= 0):
                 self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
             else:
-                self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 - rollRatio/2))
+                self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio / 2))
         else:
             if (rollRatio >= 0):
                 self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
             else:
-                self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 - rollRatio/2), 0)
+                self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio / 2), 0)
         
         self.__logger.debug("Restart whatchdog")
         self.__watchdog.reset()
@@ -128,6 +124,7 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__leftPWM2.ChangeDutyCycle(left2 * 100)
         self.__rightPWM1.ChangeDutyCycle(right1 * 100)
         self.__rightPWM2.ChangeDutyCycle(right2 * 100)
+        pass
 
     def stopKart(self):
         self.__logger.debug("Watchdog bitten the cat!!")
