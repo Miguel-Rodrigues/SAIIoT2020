@@ -44,7 +44,7 @@ class KartDriverService(metaclass=SingletonMeta):
     __leftMotorPin1 = 26
     __leftMotorPin2 = 19
     __rightMotorPin1 = 13
-    __rightMotorPin2 = 8
+    __rightMotorPin2 = 6
     __frequency = 100
 
     __rollThreshold = 60
