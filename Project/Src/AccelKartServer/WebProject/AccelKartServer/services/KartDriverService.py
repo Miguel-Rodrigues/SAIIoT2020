@@ -109,12 +109,12 @@ class KartDriverService(metaclass=SingletonMeta):
             if (rollRatio >= 0):
                 self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
             else:
-                self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio/2))
+                self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 - rollRatio/2))
         else:
             if (rollRatio >= 0):
                 self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
             else:
-                self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio/2), 0)
+                self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 - rollRatio/2), 0)
         
         self.__logger.debug("Restart whatchdog")
         self.__watchdog.reset()
