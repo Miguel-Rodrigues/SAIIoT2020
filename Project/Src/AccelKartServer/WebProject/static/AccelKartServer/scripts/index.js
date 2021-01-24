@@ -8,8 +8,8 @@ $(document).ready(function () {
     });
 
     joypad.on("move", function(evt, data) {
-        controls.angle = data.angle.radian;
-        controls.force = data.force;
+        controls.pitch = data.force*Math.cos(data.angle.radian);
+        controls.roll = data.force*Math.sin(data.angle.radian);
         MoveKart();
     });
 
@@ -36,8 +36,13 @@ $(document).ready(function () {
     
     var refresh = true;
     var controls = {
-        angle: 0,
-        force: 0,
+        nam : "Web controller"
+        gyro : { x: 0, y: 0, z: 0 }
+        accel : { x: 0, y: 0, z: 0 }
+        compass : { x: 0, y: 0, z: 0 }
+        pitch : 0,
+        roll : 0,
+        heading : 0,
         button1: false,
         button2: false
     };
