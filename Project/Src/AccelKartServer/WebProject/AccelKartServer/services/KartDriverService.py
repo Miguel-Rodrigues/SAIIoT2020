@@ -50,7 +50,7 @@ class KartDriverService(metaclass=SingletonMeta):
 
     __rollThreshold = 60
     __pitchThreshold = 45
-
+    __ultrasonicsensor: UltraSonicSensor
     __leftPWM1: None
     __leftPWM2: None
     __rightPWM1: None
@@ -69,7 +69,9 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
         self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
         self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
+        self.__ultrasonicsensor = UltraSonicSensor(self)
         pass
+        
 
     def __initMotor(self, pin, frequency):
         GPIO.setup(pin, GPIO.OUT)
@@ -102,16 +104,17 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger.debug("pitchRatio: " + str(pitchRatio) + ", rollRatio: " + str(rollRatio))
         
         self.__logger.debug("Setting duty cycles")
-        if (pitchRatio >= 0):
-            if (rollRatio >= 0):
-                self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
+        if(__ultrasonicsensor.distance() >= 3):
+            if (pitchRatio >= 0):
+                if (rollRatio >= 0):
+                    self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
+                else:
+                    self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio / 2))
             else:
-                self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio / 2))
-        else:
-            if (rollRatio >= 0):
-                self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
-            else:
-                self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio / 2), 0)
+                if (rollRatio >= 0):
+                    self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
+                else:
+                    self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio / 2), 0)
 
         
 

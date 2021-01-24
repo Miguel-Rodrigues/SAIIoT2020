@@ -20,10 +20,10 @@
 
 #define LSM9DS1_M 0x1E
 #define LSM9DS1_AG 0x6B
-#define SDA_1 21 //8
-#define SCL_1 22 //9
-#define BUTTON_1 32
-#define BUTTON_2 33
+#define SDA_1 8 //21 
+#define SCL_1 9 //22
+#define BUTTON_1 6 //32
+#define BUTTON_2 7 //33
 
 LSM9DS1 imu;
 
