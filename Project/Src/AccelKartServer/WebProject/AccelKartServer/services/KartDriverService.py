@@ -58,24 +58,24 @@ class KartDriverService(metaclass=SingletonMeta):
     __calibrationLed = 4
     __hornLed = 3
 
-    __leftPWM1: None
-    __leftPWM2: None
-    __rightPWM1: None
-    __rightPWM2: None
+    __leftPWM1: GPIO.PWM
+    __leftPWM2: GPIO.PWM
+    __rightPWM1: GPIO.PWM
+    __rightPWM2: GPIO.PWM
 
     __logger: logging.Logger
-    __calibration: SensorData
+    __calibration: SensorData = None
 
     def __init__(self): 
         self.__logger = logging.getLogger(__name__)
         self.__logger.info("Initializing Kart Driver Service")
         self.__watchdog = WatchdogService(1000, self.stopKart)
-        self.__ultrasonicsensor = UltraSonicSensor()
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.__calibrationLed, GPIO.OUT)
         GPIO.setup(self.__hornLed, GPIO.OUT)
 
+        self.__ultrasonicsensor = UltraSonicSensor()
         self.__leftPWM1 = self.__initMotor(self.__leftMotorPin1, self.__frequency)
         self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
         self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
@@ -203,5 +203,8 @@ class KartDriverService(metaclass=SingletonMeta):
 
     def stopKart(self):
         self.__logger.debug("Emergency stop!!")
-        [pwm.ChangeDutyCycle[0] for pwm in self.__leftPWMs +  self.__rightPWMs]
+        self.__leftPWM1.ChangeDutyCycle(0)
+        self.__leftPWM2.ChangeDutyCycle(0)
+        self.__rightPWM1.ChangeDutyCycle(0)
+        self.__rightPWMs.ChangeDutyCycle(0)
         pass
