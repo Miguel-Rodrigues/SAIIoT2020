@@ -1,4 +1,5 @@
 # AccelKartServer/services/KartDriverService.py
+
 from threading import Lock
 from .WatchdogService import WatchdogService
 from ..models import SensorData
@@ -103,8 +104,10 @@ class KartDriverService(metaclass=SingletonMeta):
             self.calibrate(request)
             self.stopKart()
             return False
+            
         else:
             GPIO.output(self.__calibrationLed, GPIO.LOW)
+            pass
 
         if (request.button2):
             self.__logger.warn("HONK HONK!!!")
