@@ -67,7 +67,7 @@ class KartDriverService(metaclass=SingletonMeta):
     __logger: logging.Logger
     __calibration: SensorData = None
 
-    def __init__(self): 
+    def __init__(self):
         self.__logger = logging.getLogger(__name__)
         self.__logger.info("Initializing Kart Driver Service")
         self.__watchdog = WatchdogService(1000, self.stopKart)
@@ -82,13 +82,13 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
         self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
         pass
-        
+
     def __initMotor(self, pin, frequency):
         GPIO.setup(pin, GPIO.OUT)
         pwm = GPIO.PWM(pin, frequency)
         pwm.start(0)
         return pwm
-    
+
     def calculateRatio(self, value, deadzone, threshold):
         if (math.fabs(value) < deadzone):
             return 0
@@ -101,10 +101,10 @@ class KartDriverService(metaclass=SingletonMeta):
         if (request.button1):
             self.__logger.debug("Setting calibration to 0.")
             GPIO.output(self.__calibrationLed, GPIO.HIGH)
-            self.calibrate(request)
+            # self.calibrate(request)
             self.stopKart()
             return False
-            
+
         else:
             GPIO.output(self.__calibrationLed, GPIO.LOW)
             pass
@@ -121,13 +121,14 @@ class KartDriverService(metaclass=SingletonMeta):
 
     def moveKart(self, request: SensorData):
         if (self.checkButtonActions(request)):
-            request = self.applyCalibration(request)
+            # request = self.applyCalibration(request)
+            
             self.__logger.debug("Calculating pwm ratios")
             pitchRatio = self.calculateRatio(request.pitch, self.__deadzone, self.__pitchThreshold)
             rollRatio = self.calculateRatio(request.roll, self.__deadzone, self.__rollThreshold)
             self.__logger.debug("pitch: " + str(request.pitch) + ", roll: " + str(request.roll))
             self.__logger.debug("pitchRatio: " + str(pitchRatio) + ", rollRatio: " + str(rollRatio))
-            
+
             self.__logger.debug("Setting duty cycles")
             if (pitchRatio >= 0):
                 if(self.__ultrasonicsensor.getDistance() >= self.__limitDistance):
@@ -167,42 +168,42 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__rightPWM2.ChangeDutyCycle(right2 * 100)
         pass
 
-    def calibrate(self, request: SensorData):
-        self.__calibration = copy.deepcopy(request)
-        pass
+    # def calibrate(self, request: SensorData):
+    #     self.__calibration = copy.deepcopy(request)
+    #     pass
 
-    def applyCalibration(self, request: SensorData) -> SensorData:
-        # {
-        #     "name": "",
-        #     "gyro": { "x" : 0 , "y" : 0, "z" : 0 },
-        #     "accel": { "x" : 0 , "y" : 0, "z" : 0 },
-        #     "compass": { "x" : 0 , "y" : 0, "z" : 0 },
-        #     "pitch": 0, "roll" : 0, "heading" : 0,
-        #     "button1": True, "button2" : False
-        # }
-        if self.__calibration is not None:
-            request.accel.x -= self.__calibration.accel.x
-            request.accel.y -= self.__calibration.accel.y
-            request.accel.z -= self.__calibration.accel.z
-            request.gyro.x -= self.__calibration.gyro.x
-            request.gyro.y -= self.__calibration.gyro.y
-            request.gyro.z -= self.__calibration.gyro.z
-            request.compass.x -= self.__calibration.compass.x
-            request.compass.y -= self.__calibration.compass.y
-            request.compass.z -= self.__calibration.compass.z
-            request.pitch -= self.__calibration.pitch
-            request.roll -= self.__calibration.roll
-            request.heading -= self.__calibration.heading
-            if (math.fabs(request.pitch) > 180):
-                request.pitch -= 360
-                pass
-            if (math.fabs(request.roll) > 180):
-                request.roll -= 360
-                pass
-            if (math.fabs(request.heading) > 180):
-                request.heading -= 360
-            pass
-        return request
+    # def applyCalibration(self, request: SensorData) -> SensorData:
+    #     # {
+    #     #     "name": "",
+    #     #     "gyro": { "x" : 0 , "y" : 0, "z" : 0 },
+    #     #     "accel": { "x" : 0 , "y" : 0, "z" : 0 },
+    #     #     "compass": { "x" : 0 , "y" : 0, "z" : 0 },
+    #     #     "pitch": 0, "roll" : 0, "heading" : 0,
+    #     #     "button1": True, "button2" : False
+    #     # }
+    #     if self.__calibration is not None:
+    #         request.accel.x -= self.__calibration.accel.x
+    #         request.accel.y -= self.__calibration.accel.y
+    #         request.accel.z -= self.__calibration.accel.z
+    #         request.gyro.x -= self.__calibration.gyro.x
+    #         request.gyro.y -= self.__calibration.gyro.y
+    #         request.gyro.z -= self.__calibration.gyro.z
+    #         request.compass.x -= self.__calibration.compass.x
+    #         request.compass.y -= self.__calibration.compass.y
+    #         request.compass.z -= self.__calibration.compass.z
+    #         request.pitch -= self.__calibration.pitch
+    #         request.roll -= self.__calibration.roll
+    #         request.heading -= self.__calibration.heading
+    #         if (math.fabs(request.pitch) > 180):
+    #             request.pitch -= 360
+    #             pass
+    #         if (math.fabs(request.roll) > 180):
+    #             request.roll -= 360
+    #             pass
+    #         if (math.fabs(request.heading) > 180):
+    #             request.heading -= 360
+    #         pass
+    #     return request
 
     def stopKart(self):
         self.__logger.debug("Emergency stop!!")
