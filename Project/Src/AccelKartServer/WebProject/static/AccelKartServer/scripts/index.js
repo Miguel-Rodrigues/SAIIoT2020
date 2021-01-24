@@ -36,10 +36,7 @@ $(document).ready(function () {
     
     var refresh = true;
     var controls = {
-        nam : "Web controller"
-        gyro : { x: 0, y: 0, z: 0 }
-        accel : { x: 0, y: 0, z: 0 }
-        compass : { x: 0, y: 0, z: 0 }
+        name : "Web controller",
         pitch : 0,
         roll : 0,
         heading : 0,

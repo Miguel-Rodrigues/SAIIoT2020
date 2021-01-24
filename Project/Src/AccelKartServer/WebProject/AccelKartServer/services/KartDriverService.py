@@ -3,9 +3,9 @@
 from threading import Lock
 from .WatchdogService import WatchdogService
 from ..models import SensorData
-from .UltraSonicSensor import UltraSonicSensor
+# from .UltraSonicSensor import UltraSonicSensor
 import logging
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import math as math
 import copy as copy
 
@@ -59,10 +59,10 @@ class KartDriverService(metaclass=SingletonMeta):
     __calibrationLed = 4
     __hornLed = 3
 
-    __leftPWM1: GPIO.PWM
-    __leftPWM2: GPIO.PWM
-    __rightPWM1: GPIO.PWM
-    __rightPWM2: GPIO.PWM
+    # __leftPWM1: GPIO.PWM
+    # __leftPWM2: GPIO.PWM
+    # __rightPWM1: GPIO.PWM
+    # __rightPWM2: GPIO.PWM
 
     __logger: logging.Logger
     __calibration: SensorData = None
@@ -71,23 +71,23 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger = logging.getLogger(__name__)
         self.__logger.info("Initializing Kart Driver Service")
         self.__watchdog = WatchdogService(1000, self.stopKart)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(self.__calibrationLed, GPIO.OUT)
-        GPIO.setup(self.__hornLed, GPIO.OUT)
+        # GPIO.setmode(GPIO.BCM)
+        # GPIO.setwarnings(False)
+        # GPIO.setup(self.__calibrationLed, GPIO.OUT)
+        # GPIO.setup(self.__hornLed, GPIO.OUT)
 
-        self.__ultrasonicsensor = UltraSonicSensor()
-        self.__leftPWM1 = self.__initMotor(self.__leftMotorPin1, self.__frequency)
-        self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
-        self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
-        self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
-        pass
+    #     self.__ultrasonicsensor = UltraSonicSensor()
+    #     self.__leftPWM1 = self.__initMotor(self.__leftMotorPin1, self.__frequency)
+    #     self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
+    #     self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
+    #     self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
+    #     pass
 
-    def __initMotor(self, pin, frequency):
-        GPIO.setup(pin, GPIO.OUT)
-        pwm = GPIO.PWM(pin, frequency)
-        pwm.start(0)
-        return pwm
+    # def __initMotor(self, pin, frequency):
+    #     GPIO.setup(pin, GPIO.OUT)
+    #     pwm = GPIO.PWM(pin, frequency)
+    #     pwm.start(0)
+    #     return pwm
 
     def calculateRatio(self, value, deadzone, threshold):
         if (math.fabs(value) < deadzone):
@@ -100,21 +100,21 @@ class KartDriverService(metaclass=SingletonMeta):
     def checkButtonActions(self, request):
         if (request.button1):
             self.__logger.debug("Setting calibration to 0.")
-            GPIO.output(self.__calibrationLed, GPIO.HIGH)
+            # GPIO.output(self.__calibrationLed, GPIO.HIGH)
             # self.calibrate(request)
             self.stopKart()
             return False
 
         else:
-            GPIO.output(self.__calibrationLed, GPIO.LOW)
+            # GPIO.output(self.__calibrationLed, GPIO.LOW)
             pass
 
         if (request.button2):
             self.__logger.warn("HONK HONK!!!")
-            GPIO.output(self.__hornLed, GPIO.HIGH)
+            # GPIO.output(self.__hornLed, GPIO.HIGH)
             pass
         else:
-            GPIO.output(self.__hornLed, GPIO.LOW)
+            # GPIO.output(self.__hornLed, GPIO.LOW)
             pass
 
         return True
@@ -140,7 +140,7 @@ class KartDriverService(metaclass=SingletonMeta):
                         pass
                 else:
                     self.__logger.warn("Distance to short to drive through. Stopping!!")
-                    GPIO.output(self.__calibrationLed, GPIO.HIGH)
+                    # GPIO.output(self.__calibrationLed, GPIO.HIGH)
                     self.stopKart()
                     pass
             else:
@@ -162,10 +162,10 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger.debug("left PWMs: (" + str(left1) + ", " + str(left2) + ")")
         self.__logger.debug("right PWMs: (" + str(right1) + ", " + str(right2) + ")")
 
-        self.__leftPWM1.ChangeDutyCycle(left1 * 100)
-        self.__leftPWM2.ChangeDutyCycle(left2 * 100)
-        self.__rightPWM1.ChangeDutyCycle(right1 * 100)
-        self.__rightPWM2.ChangeDutyCycle(right2 * 100)
+        # self.__leftPWM1.ChangeDutyCycle(left1 * 100)
+        # self.__leftPWM2.ChangeDutyCycle(left2 * 100)
+        # self.__rightPWM1.ChangeDutyCycle(right1 * 100)
+        # self.__rightPWM2.ChangeDutyCycle(right2 * 100)
         pass
 
     # def calibrate(self, request: SensorData):
@@ -207,8 +207,8 @@ class KartDriverService(metaclass=SingletonMeta):
 
     def stopKart(self):
         self.__logger.debug("Emergency stop!!")
-        self.__leftPWM1.ChangeDutyCycle(0)
-        self.__leftPWM2.ChangeDutyCycle(0)
-        self.__rightPWM1.ChangeDutyCycle(0)
-        self.__rightPWM2.ChangeDutyCycle(0)
+        # self.__leftPWM1.ChangeDutyCycle(0)
+        # self.__leftPWM2.ChangeDutyCycle(0)
+        # self.__rightPWM1.ChangeDutyCycle(0)
+        # self.__rightPWM2.ChangeDutyCycle(0)
         pass
