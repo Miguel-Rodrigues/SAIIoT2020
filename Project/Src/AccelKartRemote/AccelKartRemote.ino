@@ -12,6 +12,10 @@ char const * ssid = "MEO-A76917";
 char const * ssidPassword = "CCFA669098";
 char const * address = "http://192.168.1.97:8000/AccelKartServer/api/moveKart/";
 
+// char const * ssid = "AccelKartNetwork";
+// char const * ssidPassword = "arb6lvfc";
+// char const * address = "http://192.168.1.78:8000/AccelKartServer/api/moveKart/";
+
 void setup()
 {
     Serial.begin(115200);
