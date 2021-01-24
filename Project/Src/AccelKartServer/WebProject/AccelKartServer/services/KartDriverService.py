@@ -6,7 +6,7 @@ from .UltraSonicSensor import UltraSonicSensor
 import logging
 import RPi.GPIO as GPIO
 import math as math
-import copy
+import copy as copy
 
 class SingletonMeta(type):
     """
@@ -165,7 +165,7 @@ class KartDriverService(metaclass=SingletonMeta):
         pass
 
     def calibrate(self, request: SensorData):
-        self.__calibration = request.deepcopy()
+        self.__calibration = copy.deepcopy(request)
         pass
 
     def applyCalibration(self, request: SensorData) -> SensorData:
