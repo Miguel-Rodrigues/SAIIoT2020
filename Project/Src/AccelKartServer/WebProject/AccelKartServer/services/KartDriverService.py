@@ -80,10 +80,8 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
         self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
         self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
-        self.__ultrasonicsensor = UltraSonicSensor(self)
         pass
         
-
     def __initMotor(self, pin, frequency):
         GPIO.setup(pin, GPIO.OUT)
         pwm = GPIO.PWM(pin, frequency)
