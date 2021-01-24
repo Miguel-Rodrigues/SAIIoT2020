@@ -127,7 +127,7 @@ class KartDriverService(metaclass=SingletonMeta):
             
             self.__logger.debug("Setting duty cycles")
             if (pitchRatio >= 0):
-                if(self.__ultrasonicsensor.getDistancee() >= self.__limitDistance):
+                if(self.__ultrasonicsensor.getDistance() >= self.__limitDistance):
                     if (rollRatio >= 0):
                         self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
                         pass
@@ -206,5 +206,5 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__leftPWM1.ChangeDutyCycle(0)
         self.__leftPWM2.ChangeDutyCycle(0)
         self.__rightPWM1.ChangeDutyCycle(0)
-        self.__rightPWMs.ChangeDutyCycle(0)
+        self.__rightPWM2.ChangeDutyCycle(0)
         pass
