@@ -119,8 +119,8 @@ void getButtons(sensorData *sensorData)
 char const *sensorName;
 void initializeSensor(char const *sensorName_)
 {
-    pinMode(SDA_1, INPUT_PULLUP);
-    pinMode(SCL_1, INPUT_PULLUP);
+    //pinMode(SDA_1, INPUT_PULLUP);
+    //pinMode(SCL_1, INPUT_PULLUP);
 
     pinMode(BUTTON_1, INPUT);
     pinMode(BUTTON_2, INPUT);

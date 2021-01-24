@@ -2,6 +2,7 @@
 from threading import Lock
 from .WatchdogService import WatchdogService
 from ..models import SensorData
+from .UltraSonicSensor import UltraSonicSensor
 import logging
 import RPi.GPIO as GPIO
 import math as math
@@ -49,6 +50,7 @@ class KartDriverService(metaclass=SingletonMeta):
     __rightMotorPin2 = 11
     __frequency = 100
     __deadzone = 1
+    __limitDistance = 3
 
     __rollThreshold = 60
     __pitchThreshold = 45
@@ -68,6 +70,7 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__logger = logging.getLogger(__name__)
         self.__logger.info("Initializing Kart Driver Service")
         self.__watchdog = WatchdogService(1000, self.stopKart)
+        self.__ultrasonicsensor = UltraSonicSensor()
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.__calibrationLed, GPIO.OUT)
@@ -77,7 +80,9 @@ class KartDriverService(metaclass=SingletonMeta):
         self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
         self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
         self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
+        self.__ultrasonicsensor = UltraSonicSensor(self)
         pass
+        
 
     def __initMotor(self, pin, frequency):
         GPIO.setup(pin, GPIO.OUT)
@@ -94,7 +99,6 @@ class KartDriverService(metaclass=SingletonMeta):
             return value / threshold
 
     def checkButtonActions(self, request):
-        
         if (request.button1):
             self.__logger.debug("Setting calibration to 0.")
             GPIO.output(self.__calibrationLed, GPIO.HIGH)
@@ -125,15 +129,27 @@ class KartDriverService(metaclass=SingletonMeta):
             
             self.__logger.debug("Setting duty cycles")
             if (pitchRatio >= 0):
-                if (rollRatio >= 0):
-                    self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
+                if(self.__ultrasonicsensor.getDistancee() >= self.__limitDistance):
+                    if (rollRatio >= 0):
+                        self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
+                        pass
+                    else:
+                        self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio / 2))
+                        pass
                 else:
-                    self.setDutyCycles(0, pitchRatio, 0, pitchRatio * (1 + rollRatio / 2))
+                    self.__logger.warn("Distance to short to drive through. Stopping!!")
+                    GPIO.output(self.__calibrationLed, GPIO.HIGH)
+                    self.stopKart()
+                    pass
             else:
                 if (rollRatio >= 0):
                     self.setDutyCycles(-pitchRatio * (1 - rollRatio/2), 0, -pitchRatio, 0)
+                    pass
                 else:
                     self.setDutyCycles(-pitchRatio, 0, -pitchRatio * (1 + rollRatio / 2), 0)
+                    pass
+                pass
+            pass
 
             self.__logger.debug("Restart whatchdog")
             self.__watchdog.reset()
