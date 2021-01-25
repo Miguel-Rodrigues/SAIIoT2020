@@ -20,9 +20,7 @@ class WatchdogService(Exception):
         self.userHandler = userHandler
         self.reset()
 
-        self.loop = asyncio.new_event_loop()
-        task = self.loop.create_task(self.checkWatchdog())
-        self.loop.run_until_complete(task)
+        asyncio.ensure_future(self.checkWatchdog())
         pass
 
     def __del__(self):
