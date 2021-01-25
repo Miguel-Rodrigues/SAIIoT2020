@@ -10,12 +10,6 @@ from rest_framework.response import Response
 from .services.KartDriverService import KartDriverService
 from . import models
 import logging
-import sys
-
-# https://stackoverflow.com/questions/37916077/django-run-code-on-application-start-but-not-on-migrations
-kartDriverService: KartDriverService
-if ('makemigrations' not in sys.argv or 'migrate' not in sys.argv):
-    kartDriverService = KartDriverService()
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +39,7 @@ def moveKart(request):
     if (model.is_valid()):
         logger.debug("SensorData model is valid")
         data: models.SensorData = models.SensorData(request.data)
+        kartDriverService = KartDriverService()
         kartDriverService.moveKart(data)
         return JsonResponse({"Status" : "OK"})
     else:
