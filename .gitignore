@@ -17,3 +17,4 @@ test/resources/projects/maven/salut/testGradle
 Project/Src/AccelKartServer/env
 __pycache__
 build
+Project/Src/AccelKartServer/WebProject/db.sqlite3
