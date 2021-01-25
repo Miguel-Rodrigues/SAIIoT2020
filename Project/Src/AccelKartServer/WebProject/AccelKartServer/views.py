@@ -1,18 +1,22 @@
 # AccelKartServer/views.py
+from django.conf import settings
 from django.http.response import JsonResponse
+from django.template.response import TemplateResponse
 from rest_framework import serializers
 from rest_framework.exceptions import bad_request
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services.KartDriverService import KartDriverService
-from django.template.response import TemplateResponse
 from . import models
 import logging
-
 import sys
 
-kartDriverService: KartDriverService = KartDriverService()
+# https://stackoverflow.com/questions/37916077/django-run-code-on-application-start-but-not-on-migrations
+kartDriverService: KartDriverService
+if (settings.RUNTIME):
+    kartDriverService = KartDriverService()
+
 logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
