@@ -43,7 +43,7 @@ class UltraSonicSensor:
             GPIO.output(self.__triggerPin, True)
         
             # set Trigger after 0.01ms to LOW
-            asyncio.sleep(0.00001)
+            await asyncio.sleep(0.00001)
             GPIO.output(self.__triggerPin, False)
         
             StartTime = time.time()

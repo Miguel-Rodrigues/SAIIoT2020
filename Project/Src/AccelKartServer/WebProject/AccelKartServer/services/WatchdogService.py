@@ -19,7 +19,9 @@ class WatchdogService(Exception):
         
         self.timeout = timeout
         self.userHandler = userHandler
-        self.routine = asyncio.run_coroutine_threadsafe(self.checkWatchdog(), self.loop)
+        
+        task = self.loop.create_task(self.checkWatchdog())
+        self.loop.run_until_complete(task)
         pass
 
     def reset(self):
@@ -35,7 +37,7 @@ class WatchdogService(Exception):
         while(not self.touched):
             if (self.running):
                 self.touched = False
-                asyncio.sleep(self.timeout)
+                await asyncio.sleep(self.timeout)
             else:
                 return
 
