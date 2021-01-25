@@ -19,6 +19,7 @@ class WatchdogService(Exception):
         
         self.timeout = timeout
         self.userHandler = userHandler
+        self.reset()
         
         task = self.loop.create_task(self.checkWatchdog())
         self.loop.run_until_complete(task)
