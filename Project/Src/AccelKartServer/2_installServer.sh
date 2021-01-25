@@ -25,6 +25,8 @@ mod_wsgi-express install-module
 cd ./WebProject
 chmod 775 ./manage.py
 ./manage.py collectstatic --noinput
+./manage.py migrate
+./manage.py makemigrations
 cd ..
 deactivate
 

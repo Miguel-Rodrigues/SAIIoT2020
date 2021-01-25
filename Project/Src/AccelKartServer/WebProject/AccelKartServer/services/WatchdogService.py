@@ -1,9 +1,7 @@
 # AccelKartServer/services/WatchdogService.py
 
 #Source: https://stackoverflow.com/questions/16148735/how-to-implement-a-watchdog-timer-in-python
-from datetime import datetime
 from datetime import timedelta
-from background_task import background
 import logging
 
 class WatchdogService(Exception):
@@ -18,7 +16,7 @@ class WatchdogService(Exception):
         
         self.timeout = timeout
         self.userHandler = userHandler
-        self.handler(schedule=timedelta(milliseconds = timeout))
+        # self.handler(schedule=timedelta(milliseconds = timeout))
 
     def reset(self):
         self.__logger.debug("Feeding the watchdog.")
@@ -29,7 +27,6 @@ class WatchdogService(Exception):
         self.touched = False
         self.running = False
 
-    @background(schedule=timedelta(milliseconds = 1000))
     def handler(self):
         if (not self.touched):
             self.__logger.debug("Watchdog bitten the cat!!")

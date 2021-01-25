@@ -1,7 +1,9 @@
 #Libraries
+import time
 import logging
 import RPi.GPIO as GPIO
-import time
+from datetime import timedelta
+
 
 class UltraSonicSensor:
     __logger: logging.Logger
@@ -9,6 +11,7 @@ class UltraSonicSensor:
     #set GPIO Pins
     __triggerPin = 21
     __echoPin = 20
+    __lastDistance = 0
 
     #Speed of sound
     __echoSpeed = 34300
@@ -24,6 +27,11 @@ class UltraSonicSensor:
         pass
 
     def getDistance(self):
+        self.__logger.debug("Measured distance: " + str(self.__lastDistance) + "cm.")
+        self.__lastDistance
+        pass
+
+    def updateDistance(self):
         # set Trigger to HIGH
         GPIO.output(self.__triggerPin, True)
     
@@ -47,7 +55,7 @@ class UltraSonicSensor:
 
         # multiply with the sonic speed (34300 cm/s)
         # and divide by 2, because there and back
-        distance = (TimeElapsed * self.__echoSpeed) / 2
+        self.__lastDistance = (TimeElapsed * self.__echoSpeed) / 2
+        self.updateDistance(schedule=timedelta(milliseconds=300))
+        pass
         
-        self.__logger.debug("Measured distance: " + str(distance) + "cm.")
-        return distance

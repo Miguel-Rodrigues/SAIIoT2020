@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
-    'background_task',
     'AccelKartServer'
 ]
 
@@ -151,3 +150,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 #         'level': 'DEBUG',
 #     },
 # }
+
+# Celery Configuration Options
+timezone = 'Europe/London'
