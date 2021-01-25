@@ -1,14 +1,17 @@
 # AccelKartServer/services/WatchdogService.py
 
 #Source: https://stackoverflow.com/questions/16148735/how-to-implement-a-watchdog-timer-in-python
-from datetime import timedelta
+import asyncio
 import logging
+from concurrent.futures import Future
 
 class WatchdogService(Exception):
 
     touched = False
     running = False
     timeout = 0
+    routine: Future = None
+    loop = asyncio.get_event_loop()
 
     def __init__(self, timeout, userHandler = None):  # timeout in milliseconds
         self.__logger = logging.getLogger(__name__)
@@ -16,7 +19,8 @@ class WatchdogService(Exception):
         
         self.timeout = timeout
         self.userHandler = userHandler
-        # self.handler(schedule=timedelta(milliseconds = timeout))
+        self.routine = asyncio.run_coroutine_threadsafe(self.checkWatchdog(), self.loop)
+        pass
 
     def reset(self):
         self.__logger.debug("Feeding the watchdog.")
@@ -27,19 +31,20 @@ class WatchdogService(Exception):
         self.touched = False
         self.running = False
 
-    def handler(self):
-        if (not self.touched):
-            self.__logger.debug("Watchdog bitten the cat!!")
-            self.stop()
-            if self.userHandler is not None:
-                self.userHandler()
+    async def checkWatchdog(self):
+        while(not self.touched):
+            if (self.running):
+                self.touched = False
+                asyncio.sleep(self.timeout)
             else:
-                self.defaultHandler()
-            pass
-        elif(self.running):
-            self.touched = False
-            self.handler(schedule=timedelta(milliseconds = self.timeout))
-            pass
+                return
+
+        self.__logger.debug("Watchdog bitten the cat!!")
+        self.stop()
+        if self.userHandler is not None:
+            self.userHandler()
+        else:
+            self.defaultHandler()
 
     def defaultHandler(self):
         raise self
