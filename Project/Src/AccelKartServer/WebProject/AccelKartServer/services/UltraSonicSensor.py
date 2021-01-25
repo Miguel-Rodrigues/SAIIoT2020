@@ -11,7 +11,6 @@ class UltraSonicSensor:
     __triggerPin = 21
     __echoPin = 20
     __lastDistance = 0
-    loop = asyncio.get_event_loop()
 
     #Speed of sound
     __echoSpeed = 34300
@@ -25,6 +24,7 @@ class UltraSonicSensor:
         GPIO.setup(self.__triggerPin, GPIO.OUT)
         GPIO.setup(self.__echoPin, GPIO.IN)
 
+        self.loop = asyncio.new_event_loop()
         self.loop.create_task(self.updateDistance())
         self.loop.run_forever()
         pass

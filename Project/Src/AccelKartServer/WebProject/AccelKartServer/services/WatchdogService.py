@@ -11,7 +11,6 @@ class WatchdogService(Exception):
     running = False
     timeout = 0
     routine: Future = None
-    loop = asyncio.get_event_loop()
 
     def __init__(self, timeout, userHandler = None):  # timeout in milliseconds
         self.__logger = logging.getLogger(__name__)
@@ -21,6 +20,7 @@ class WatchdogService(Exception):
         self.userHandler = userHandler
         self.reset()
 
+        self.loop = asyncio.new_event_loop()
         task = self.loop.create_task(self.checkWatchdog())
         self.loop.run_until_complete(task)
         pass
