@@ -14,7 +14,7 @@ import sys
 
 # https://stackoverflow.com/questions/37916077/django-run-code-on-application-start-but-not-on-migrations
 kartDriverService: KartDriverService
-if not 'manage.py' in sys.argv:
+if ('makemigrations' not in sys.argv or 'migrate' not in sys.argv):
     kartDriverService = KartDriverService()
 
 logger = logging.getLogger(__name__)
