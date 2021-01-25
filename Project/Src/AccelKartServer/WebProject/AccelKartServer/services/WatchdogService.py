@@ -20,10 +20,13 @@ class WatchdogService(Exception):
         self.timeout = timeout
         self.userHandler = userHandler
         self.reset()
-        
+
         task = self.loop.create_task(self.checkWatchdog())
         self.loop.run_until_complete(task)
         pass
+
+    def __del__(self):
+        self.loop.close()
 
     def reset(self):
         self.__logger.debug("Feeding the watchdog.")

@@ -25,7 +25,7 @@ class UltraSonicSensor:
         GPIO.setup(self.__triggerPin, GPIO.OUT)
         GPIO.setup(self.__echoPin, GPIO.IN)
 
-        asyncio.ensure_future(self.updateDistance(), self.loop)
+        self.loop.create_task(self.updateDistance())
         self.loop.run_forever()
         pass
 
