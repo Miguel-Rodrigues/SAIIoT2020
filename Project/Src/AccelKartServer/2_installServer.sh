@@ -42,7 +42,7 @@ echo "== Configure permissions =="
 chmod g+w /var/www/AccelkartServer/WebProject/db.sqlite3
 chmod g+w /var/www/AccelkartServer/WebProject
 chmod g+w /var/www/AccelkartServer
-chown :www-data db.sqlite3
+chown :www-data /var/www/AccelkartServer/WebProject/db.sqlite3
 chown :www-data /var/www/AccelkartServer/WebProject
 chown :www-data /var/www/AccelkartServer
 usermod -a -G gpio www-data
