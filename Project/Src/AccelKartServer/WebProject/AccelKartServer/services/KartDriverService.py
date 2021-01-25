@@ -35,17 +35,18 @@ class KartDriverService():
     def __init__(self):
         self.__logger = logging.getLogger(__name__)
         self.__logger.info("Initializing Kart Driver Service")
-        self.__watchdog = WatchdogService(1000, self.stopKart)
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.__calibrationLed, GPIO.OUT)
         GPIO.setup(self.__hornLed, GPIO.OUT)
 
-        self.__ultrasonicsensor = UltraSonicSensor()
         self.__leftPWM1 = self.__initMotor(self.__leftMotorPin1, self.__frequency)
         self.__leftPWM2 = self.__initMotor(self.__leftMotorPin2, self.__frequency)
         self.__rightPWM1 = self.__initMotor(self.__rightMotorPin1, self.__frequency)
         self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
+
+        self.__ultrasonicsensor = UltraSonicSensor()
+        self.__watchdog = WatchdogService(1000, self.stopKart)
         pass
 
     def __initMotor(self, pin, frequency):
@@ -171,6 +172,7 @@ class KartDriverService():
 
     def stopKart(self):
         self.__logger.debug("Hit the brake!!! I'm going to crash!!")
+        self.logger.debug(self.__leftPWM1)
         self.__leftPWM1.ChangeDutyCycle(0)
         self.__leftPWM2.ChangeDutyCycle(0)
         self.__rightPWM1.ChangeDutyCycle(0)
