@@ -12,11 +12,11 @@ class SensorData:
     def __init__(self, dict = None):
         if (dict != None):
             self.name = dict["name"]
-            self.pitch = dict["pitch"]
-            self.roll = dict["roll"]
-            self.heading = dict["heading"]
-            self.button1 = dict["button1"]
-            self.button2 = dict["button2"]
+            self.pitch = float(dict["pitch"])
+            self.roll = float(dict["roll"])
+            self.heading = float(dict["heading"])
+            self.button1 = dict["button1"].lower() == "true"
+            self.button2 = dict["button2"].lower() == "true"
             pass
         pass
     pass

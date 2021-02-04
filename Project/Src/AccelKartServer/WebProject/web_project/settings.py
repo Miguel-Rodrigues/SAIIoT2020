@@ -62,7 +62,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'web_project.middleware.asyncMiddleware.asynchronousMiddleware'
 ]
 
 ROOT_URLCONF = 'web_project.urls'
@@ -134,8 +135,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "static"
-#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+#STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 LOGGING = {
     'version': 1,
@@ -151,5 +152,7 @@ LOGGING = {
     },
 }
 
-# Celery Configuration Options
-timezone = 'Europe/London'
+#settings.py
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)

@@ -1,5 +1,6 @@
 # AccelKartServer/services/KartDriverService.py
 # https://stackoverflow.com/questions/37916077/django-run-code-on-application-start-but-not-on-migrations
+import asyncio
 import sys
 import logging
 import RPi.GPIO as GPIO
@@ -23,7 +24,7 @@ class KartDriverService():
     __rollThreshold = 60
     __pitchThreshold = 45
 
-    __calibrationLed = 4
+    __warningLed = 4
     __hornLed = 3
 
     __leftPWM1: GPIO.PWM
@@ -38,7 +39,7 @@ class KartDriverService():
         self.__logger.info("Initializing Kart Driver Service")
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(self.__calibrationLed, GPIO.OUT)
+        GPIO.setup(self.__warningLed, GPIO.OUT)
         GPIO.setup(self.__hornLed, GPIO.OUT)
 
         self.__leftPWM1 = self.__initMotor(self.__leftMotorPin1, self.__frequency)
@@ -47,7 +48,7 @@ class KartDriverService():
         self.__rightPWM2 = self.__initMotor(self.__rightMotorPin2, self.__frequency)
 
         self.__ultrasonicsensor = UltraSonicSensor()
-        self.__watchdog = WatchdogService(1000, self.stopKart)
+        self.__watchdog = WatchdogService(1, self.stopKart)
         pass
 
     def __initMotor(self, pin, frequency):
@@ -65,17 +66,17 @@ class KartDriverService():
             return value / threshold
 
     def checkButtonActions(self, request):
-        if (request.button1):
-            GPIO.output(self.__calibrationLed, GPIO.HIGH)
+        if (request.button1 == 'true'):
+            GPIO.output(self.__warningLed, GPIO.HIGH)
             # self.calibrate(request)
             self.stopKart()
             return False
 
         else:
-            GPIO.output(self.__calibrationLed, GPIO.LOW)
+            GPIO.output(self.__warningLed, GPIO.LOW)
             pass
 
-        if (request.button2):
+        if (request.button2 == 'true'):
             self.__logger.warn("HONK HONK!!!")
             GPIO.output(self.__hornLed, GPIO.HIGH)
             pass
@@ -97,7 +98,7 @@ class KartDriverService():
 
             self.__logger.debug("Setting duty cycles")
             if (pitchRatio >= 0):
-                if(self.__ultrasonicsensor.getDistance() >= self.__limitDistance):
+                if asyncio.run(self.__ultrasonicsensor.getDistance()) >= self.__limitDistance:
                     if (rollRatio >= 0):
                         self.setDutyCycles(0, pitchRatio * (1 - rollRatio/2), 0, pitchRatio)
                         pass
@@ -106,7 +107,7 @@ class KartDriverService():
                         pass
                 else:
                     self.__logger.warn("Distance to short to drive through. Stopping!!")
-                    GPIO.output(self.__calibrationLed, GPIO.HIGH)
+                    GPIO.output(self.__warningLed, GPIO.HIGH)
                     self.stopKart()
                     pass
             else:
@@ -119,7 +120,6 @@ class KartDriverService():
                 pass
             pass
 
-            self.__logger.debug("Restart whatchdog")
             self.__watchdog.reset()
             pass
         pass
@@ -173,7 +173,6 @@ class KartDriverService():
 
     def stopKart(self):
         self.__logger.debug("Hit the brake!!! I'm going to crash!!")
-        self.logger.debug(self.__leftPWM1)
         self.__leftPWM1.ChangeDutyCycle(0)
         self.__leftPWM2.ChangeDutyCycle(0)
         self.__rightPWM1.ChangeDutyCycle(0)

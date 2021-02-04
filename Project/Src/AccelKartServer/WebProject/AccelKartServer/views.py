@@ -1,16 +1,14 @@
 # AccelKartServer/views.py
-from django.conf import settings
-from django.http.response import JsonResponse
+import sys
+import asyncio
+import logging
+from . import models
+from .services.KartDriverService import KartDriverService
 from django.template.response import TemplateResponse
-from rest_framework import serializers
-from rest_framework.exceptions import bad_request
-from rest_framework.views import APIView
+from rest_framework.exceptions import APIException
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .services.KartDriverService import KartDriverService
-from . import models
-import logging
-import sys
+from rest_framework import serializers
 
 # https://stackoverflow.com/questions/37916077/django-run-code-on-application-start-but-not-on-migrations
 kartDriverService: KartDriverService
@@ -41,11 +39,15 @@ def apiOverview(request):
 @api_view(['POST'])
 def moveKart(request):
     logger.info("POST '/api/moveKart'")
-    model = models.SensorDataSerializer(data = request.data)
-    if (model.is_valid()):
-        logger.debug("SensorData model is valid")
-        data: models.SensorData = models.SensorData(request.data)
-        kartDriverService.moveKart(data)
-        return JsonResponse({"Status" : "OK"})
-    else:
-        raise serializers.ValidationError({"Status": "NOT OK", "Fields": model.errors})
+
+    try:
+        model = models.SensorDataSerializer(data = request.data)
+        if (model.is_valid()):
+            logger.debug("SensorData model is valid")
+            data: models.SensorData = models.SensorData(request.data)
+            kartDriverService.moveKart(data)
+            return Response({"Status" : "OK"})
+        else:
+            raise serializers.ValidationError({"Status": "NOT OK", "Fields": model.errors})
+    except:
+            raise APIException({"Status": "NOT OK", "Exception" : sys.exc_info()})
