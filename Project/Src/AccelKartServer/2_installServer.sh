@@ -2,7 +2,7 @@
 
 # https://mikesmithers.wordpress.com/2017/02/21/configuring-django-with-apache-on-a-raspberry-pi/
 echo "== Purge old installation =="
-service AccelKartServer-daphne stop
+service AccelKartServer stop
 service apache2 stop
 rm -r /var/www/AccelkartServer
 
