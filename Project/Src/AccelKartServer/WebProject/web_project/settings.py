@@ -146,9 +146,7 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'file': {
-            'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'formatter': 'file',
             'filename': '/var/log/AccelKartServer.log'
         }
     },
