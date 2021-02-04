@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # https://mikesmithers.wordpress.com/2017/02/21/configuring-django-with-apache-on-a-raspberry-pi/
-echo "== Purge old installation =="
+
+
+echo "== Stop services =="
 service AccelKartServer stop
 service apache2 stop
+
+echo "== Purge old installation =="
 rm -r /var/www/AccelkartServer
 
 echo "== Install/Update dependencies =="
@@ -56,7 +60,7 @@ a2enmod proxy_balancer
 a2enmod lbmethod_byrequests
 a2ensite AccelKartServer.local
 
-echo "== Restart apache2 server =="
+echo "== Start Services =="
 service AccelKartServer start
 service apache2 start
 
