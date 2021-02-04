@@ -1,0 +1,12 @@
+[Unit]
+Description=AccelKartServer server script
+After=network.target
+
+[Service]
+User=www-data
+WorkingDirectory=/var/www/AccelkartServer
+ExecStart=/var/www/AccelkartServer/env/bin/daphne -b 0.0.0.0 -p 8001 web_project.asgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
